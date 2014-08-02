@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="main">
+
+	<target name="main">
+
+		<!-- Creatign Variables -->
+		<property name="dir.src" value="src" />
+		<property name="dir.build" value="bin" />
+		<tstamp>
+			<format property="current.time" pattern="yyyy-MM-dd HH:mm:ss" />
+		</tstamp>
+		
+		<!-- updating property file -->
+		<propertyfile file="build.properties" comment="Simple Tasker Builder Properties">
+			<entry key="major" type="int" default="0" />
+			<entry key="minor" type="int" default="0" />
+			<entry key="buildnr" type="int" operation="+" default="0" />
+		</propertyfile>
+		<!-- loading property file -->
+		<loadproperties srcFile="build.properties" />
+
+		<!-- replacing current stuff -->
+		<replaceregexp file="${dir.src}/com/simpletasker/Lib.java"
+			match="VERSION = (.*)" replace="VERSION = &quot;${major}.${minor}.${buildnr}&quot;;"
+			byline="true">
+		</replaceregexp>
+		
+		<replaceregexp file="${dir.src}/com/simpletasker/Lib.java"
+			match="VERSION_MAJOR = (.*)" replace="VERSION_MAJOR = &quot;${major}&quot;;"
+			byline="true">
+		</replaceregexp>
+		
+		<replaceregexp file="${dir.src}/com/simpletasker/Lib.java"
+			match="VERSION_MINOR = (.*)" replace="VERSION_MINOR = &quot;${minor}&quot;;"
+			byline="true">
+		</replaceregexp>
+		
+		<replaceregexp file="${dir.src}/com/simpletasker/Lib.java"
+			match="BUILDNUMBER = (.*)" replace="BUILDNUMBER = &quot;${buildnr}&quot;;"
+			byline="true">
+		</replaceregexp>
+		
+		<replaceregexp file="${dir.src}/com/simpletasker/Lib.java"
+			match="BUILD_TIME = (.*)" replace="BUILD_TIME = &quot;${current.time}&quot;;"
+			byline="true">
+		</replaceregexp>
+
+	</target>
+</project>
