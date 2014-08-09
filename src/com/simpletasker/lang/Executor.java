@@ -2,9 +2,6 @@ package com.simpletasker.lang;
 
 public class Executor {
 
-    private String[] keyWords = {"end","start"};
-
-
     /**
      * Will return all possible commands starting with the string given.<br/>
      * For example "Ma" will return Math and "Math." will return all possible commands in the Math tree
@@ -15,5 +12,6 @@ public class Executor {
         //todo fix
         return new Command[]{new Command("none")};
     }
+
 
 }
