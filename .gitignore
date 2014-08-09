@@ -4,7 +4,9 @@
 #files
 .classpath
 .project
+SimpleTasker.iml
 
 #folders
 /bin/
 /.settings/
+/.idea/
