@@ -1,37 +1,23 @@
 package com.simpletasker.ui;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Point;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JSplitPane;
-import javax.swing.JButton;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 
 public class EditorFrame extends JFrame {
 
+	private static final long serialVersionUID = 4513395576031795608L;
 	private JPanel contentPane;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EditorFrame frame = new EditorFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private CodeArea codeArea;
+	private ConsoleArea consoleArea;
 
 	public EditorFrame() {
 		
@@ -77,8 +63,9 @@ public class EditorFrame extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("New tab", null, panel_1, null);
+		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		CodeArea codeArea = new CodeArea();
+		codeArea = new CodeArea();
 		panel_1.add(codeArea);
 		
 		JPanel panel = new JPanel();
@@ -99,8 +86,14 @@ public class EditorFrame extends JFrame {
 		JButton btnStop = new JButton("Stop");
 		panel_3.add(btnStop);
 		
-		ConsoleArea consoleArea = new ConsoleArea();
+		consoleArea = new ConsoleArea();
 		panel_2.add(consoleArea, BorderLayout.CENTER);
 	}
 
+	public CodeArea getCodeArea() {
+		return codeArea;
+	}
+	public ConsoleArea getConsoleArea() {
+		return consoleArea;
+	}
 }
