@@ -11,12 +11,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JScrollPane;
 
 public class EditorFrame extends JFrame {
 
 	private static final long serialVersionUID = 4513395576031795608L;
 	private JPanel contentPane;
-	private CodeArea codeArea;
+	private CodePane codeArea;
 	private ConsoleArea consoleArea;
 
 	public EditorFrame() {
@@ -65,7 +66,7 @@ public class EditorFrame extends JFrame {
 		tabbedPane.addTab("New tab", null, panel_1, null);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		codeArea = new CodeArea();
+		codeArea = new CodePane();
 		panel_1.add(codeArea);
 		
 		JPanel panel = new JPanel();
@@ -86,13 +87,13 @@ public class EditorFrame extends JFrame {
 		JButton btnStop = new JButton("Stop");
 		panel_3.add(btnStop);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		panel_2.add(scrollPane, BorderLayout.CENTER);
+		
 		consoleArea = new ConsoleArea();
-		panel_2.add(consoleArea, BorderLayout.CENTER);
+		scrollPane.setViewportView(consoleArea);
 	}
 
-	public CodeArea getCodeArea() {
-		return codeArea;
-	}
 	public ConsoleArea getConsoleArea() {
 		return consoleArea;
 	}

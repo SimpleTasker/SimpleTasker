@@ -15,10 +15,6 @@ public class GuiManager {
 		return frame.getConsoleArea();
 	}
 	
-	public CodeArea getCodeArea(){
-		return frame.getCodeArea();
-	}
-	
 	public EditorFrame getEditorFrame(){
 		return frame;
 	}
