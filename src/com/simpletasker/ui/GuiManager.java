@@ -28,6 +28,8 @@ public class GuiManager {
 		manager.getConsole().println("green", Color.green);
 		manager.getConsole().println("red", Color.red);
 		manager.getConsole().println("black", Color.black);
+		
+		System.out.println(manager.getConsole().getInputLine());
 	}
 	
 }
