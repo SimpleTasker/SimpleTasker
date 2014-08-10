@@ -13,5 +13,9 @@ public class Executor {
         return new Command[]{new Command("none")};
     }
 
+    public void rawRun(String task) {
+        new Task(task).run();
+    }
+
 
 }
