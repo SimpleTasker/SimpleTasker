@@ -1,5 +1,7 @@
 package com.simpletasker.lang.commands;
 
+import com.simpletasker.common.exceptions.SimpleTaskException;
+import com.simpletasker.lang.Task;
 import com.simpletasker.lang.variables.Variable;
 
 import java.util.ArrayList;
@@ -11,20 +13,28 @@ import java.util.List;
 public abstract class Command {
 
     public static final String separator = ".";
+    private final Command parent;
 
     private String name;
 
     private List<Command> children = new ArrayList<>();
     private int numParam = 0;
+    Task task;
 
 
     public Command(String name) {
         this.name = name;
+        parent = null;
     }
 
     public Command(Command parent,String name) {
         this.name = name;
         parent.addChildren(this);
+        this.parent = parent;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     private void addChildren(Command command) {
@@ -32,8 +42,15 @@ public abstract class Command {
     }
 
 
-    public String getFullName() {
+    public String name() {
         return name;
+    }
+
+    public String getFullName() {
+        if(parent==null) {
+            return name();
+        }
+        return parent.getFullName() + name();
     }
 
     /**
@@ -44,5 +61,5 @@ public abstract class Command {
         return  numParam;
     }
 
-    public abstract void onCalled(Variable[] params);
+    public abstract void onCalled(Variable[] params) throws SimpleTaskException;
 }

@@ -27,8 +27,8 @@ public class Variable {
         return value;
     }
 
-    public Variable castToSpecific() {
-        return getTypeVariable(type,value);
+    public Variable castToSpecific(Type type) throws WrongTypeException {
+        return getTypeVariable(type,getValueOfType(type));
     }
 
     public static Variable getTypeVariable(Type type,String value) {

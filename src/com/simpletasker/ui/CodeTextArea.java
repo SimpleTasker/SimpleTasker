@@ -186,7 +186,7 @@ public class CodeTextArea extends JTextArea implements CaretListener{
 			return;
 		}
 		Executor executor = new Executor();
-		Command[] cmds = executor.getCommand(getCurrentlyTypedWord());
+		Command[] cmds = executor.getCommands(getCurrentlyTypedWord());
 		for(Command cmd : cmds){
 			labels.add(new SuggestionLabel(cmd.getFullName(), this));
 		}
