@@ -1,6 +1,6 @@
 package com.simpletasker.lang.commands;
 
-import com.simpletasker.lang.Variable;
+import com.simpletasker.lang.variables.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public abstract class Command {
 
     private String name;
 
-    private List<Command> childeren = new ArrayList<>();
+    private List<Command> children = new ArrayList<>();
     private int numParam = 0;
 
 
@@ -24,11 +24,11 @@ public abstract class Command {
 
     public Command(Command parent,String name) {
         this.name = name;
-        parent.addChilderen(this);
+        parent.addChildren(this);
     }
 
-    private void addChilderen(Command command) {
-        childeren.add(command);
+    private void addChildren(Command command) {
+        children.add(command);
     }
 
 
