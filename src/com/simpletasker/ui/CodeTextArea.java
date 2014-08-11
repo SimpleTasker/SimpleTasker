@@ -10,19 +10,18 @@ import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JWindow;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+
+import com.simpletasker.lang.Executor;
+import com.simpletasker.lang.commands.Command;
 
 public class CodeTextArea extends JTextArea implements CaretListener{
 
@@ -69,7 +68,6 @@ public class CodeTextArea extends JTextArea implements CaretListener{
 
 		@Override
 		public void actionPerformed(ActionEvent ae) {
-
 			if (labels.size() > 1) {
 				
 				int i = 0;
@@ -82,14 +80,14 @@ public class CodeTextArea extends JTextArea implements CaretListener{
 					i++;
 				}
 				if(newFocused > labels.size()-1)
-					setFocusToTextField();
+					System.out.println("wut");
 				else
 					labels.get(newFocused).setFocused(true);
 
 			} else {
 				// if there is just 1 suggestion, a button press down always
 				// result in setting the focus to the text field.
-				setFocusToTextField();
+				//setFocusToTextField();
 			}
 		}
 		
@@ -187,8 +185,12 @@ public class CodeTextArea extends JTextArea implements CaretListener{
 		if (typedWord.isEmpty()) {
 			return;
 		}
+		Executor executor = new Executor();
+		Command[] cmds = executor.getCommands(getCurrentlyTypedWord());
+		for(Command cmd : cmds){
+			labels.add(new SuggestionLabel(cmd.getFullName(), this));
+		}
 		
-		//TODO: add new suggestions to the labels array.
 	}
 	
 	/**
@@ -234,16 +236,6 @@ public class CodeTextArea extends JTextArea implements CaretListener{
 	 */
 	public int getWordEnd(){
 		return carotPos;
-	}
-	
-	/**
-	 * Sets the focus to the current textPane.
-	 */
-	public void setFocusToTextField() {
-		//parent.toFront();
-		//parent.requestFocusInWindow();
-		requestFocusInWindow();
-		requestFocus();
 	}
 	
 	/**
