@@ -2,6 +2,7 @@ package com.simpletasker.ui;
 
 import java.awt.Point;
 
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
@@ -25,7 +26,7 @@ public class CodePane extends JScrollPane implements DocumentListener{
 		lineNrPane = new JTextArea();
 		lineNrPane.setBackground(UIManager.getColor("Panel.background"));
 		lineNrPane.setEditable(false);
-		lineNrPane.setText("1  ");
+		lineNrPane.setText("1");
 		
 		setViewportView(textArea);
 		setRowHeaderView(lineNrPane);
@@ -47,8 +48,9 @@ public class CodePane extends JScrollPane implements DocumentListener{
 			codeIsChaningText = true;
 			updateLineNumbers();
 			textArea.colorErrors();
+			
 			textArea.showMenu();
-			textArea.setFocusToTextField();
+			doFocusStuff();
 			codeIsChaningText = false;
 		}
 	};
@@ -79,6 +81,12 @@ public class CodePane extends JScrollPane implements DocumentListener{
 			return;
 		textArea.magicCaretPos = temp;
 		SwingUtilities.invokeLater(onChane);
+	}
+	
+	public void doFocusStuff(){
+		System.out.println("adsfs");
+		textArea.popupWindow.requestFocusInWindow();
+		textArea.popupWindow.requestFocus();
 	}
 	
 }

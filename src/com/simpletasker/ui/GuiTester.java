@@ -2,11 +2,11 @@ package com.simpletasker.ui;
 
 import java.awt.Color;
 
-public class GuiManager {
+public class GuiTester {
 	
 	EditorFrame frame;
 	
-	public GuiManager(){
+	public GuiTester(){
 		frame = new EditorFrame();
 		frame.setVisible(true);
 	}
@@ -20,7 +20,7 @@ public class GuiManager {
 	}
 	
 	public static void main(String[] args) {
-		GuiManager manager = new GuiManager();
+		GuiTester manager = new GuiTester();
 		manager.getConsole().println("green", Color.green);
 		manager.getConsole().println("red", Color.red);
 		manager.getConsole().println("black", Color.black);

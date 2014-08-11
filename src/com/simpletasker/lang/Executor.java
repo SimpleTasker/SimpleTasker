@@ -3,6 +3,7 @@ package com.simpletasker.lang;
 import com.simpletasker.common.util.FileUtilities;
 import com.simpletasker.lang.commands.Command;
 import com.simpletasker.lang.commands.RunCommand;
+import com.simpletasker.lang.variables.Variable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,12 +22,22 @@ public class Executor {
      * @return
      */
     public Command[] getCommand(String nm) {
-        String last = nm.substring(nm.lastIndexOf("."),nm.length()-1);
-        String pre = nm.substring(0,nm.lastIndexOf("."));
-        for(Command c:commands) {
+//        String last = nm.substring(nm.lastIndexOf("."),nm.length()-1);
+//        String pre = nm.substring(0,nm.lastIndexOf("."));
+//        for(Command c:commands) {
+//
+//        }
+        return new Command[]{new RunCommand(),new Command("test") {
 
-        }
-        return new Command[0];
+			@Override
+			public void onCalled(Variable[] params) {
+			}
+        }, new Command("taata") {
+
+			@Override
+			public void onCalled(Variable[] params) {
+			}
+        }};
     }
 
     public static void rawRun(String task) {

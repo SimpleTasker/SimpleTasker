@@ -2,7 +2,7 @@ package com.simpletasker.ui;
 
 import java.awt.Color;
 
-import javax.swing.JTextPane;
+import javax.swing.JTextArea;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
@@ -13,7 +13,7 @@ import javax.swing.text.StyleConstants;
  * 
  * @author Sinius15
  */
-public class ConsoleArea extends JTextPane implements CaretListener {
+public class ConsoleArea extends JTextArea implements CaretListener {
 
 	private static final long serialVersionUID = 1505389612102502013L;
 
@@ -24,6 +24,15 @@ public class ConsoleArea extends JTextPane implements CaretListener {
 		setEditable(false);
 		addCaretListener(this);
 
+	}
+	
+	/**
+	 * Counts the amount of lines in this are.
+	 * 
+	 * @return the amount of lines.
+	 */
+	public int getLineCount() {
+		return getText().split("\\n", -1).length;
 	}
 
 	/**
@@ -84,14 +93,6 @@ public class ConsoleArea extends JTextPane implements CaretListener {
 		}
 	}
 
-	/**
-	 * Counts the amount of lines in this are.
-	 * 
-	 * @return the amount of lines.
-	 */
-	public int getLineCount() {
-		return getText().split("\\n", -1).length;
-	}
 
 	/**
 	 * use {@link #println(String, Color)} and {@link #clearConsole()} for
