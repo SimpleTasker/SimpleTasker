@@ -23,7 +23,7 @@ public class Task {
         for(String s:lines) {
             String[] operations = s.split(";");
             for(String current:operations) {
-
+                
             }
         }
     }

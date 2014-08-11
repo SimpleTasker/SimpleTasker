@@ -1,12 +1,8 @@
 package com.simpletasker.lang;
 
-import com.simpletasker.common.exceptions.SimpleTaskException;
-import com.simpletasker.common.exceptions.WrongTypeException;
 import com.simpletasker.common.util.FileUtilities;
 import com.simpletasker.lang.commands.Command;
 import com.simpletasker.lang.commands.RunCommand;
-import com.simpletasker.lang.variables.StringVariable;
-import com.simpletasker.lang.variables.Variable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,8 +11,11 @@ import java.util.List;
 public class Executor {
 
     private static final List<Command> commands = new ArrayList<>();
+    private static Executor theExecutor;
 
-
+    public static Executor getInstance() {
+        return theExecutor;
+    }
 
     /**
      * Will return all possible commands starting with the string given.<br/>
@@ -26,11 +25,18 @@ public class Executor {
      */
     public Command[] getCommands(String nm) {
         String last = nm.substring(nm.lastIndexOf("."),nm.length()-1);
-        String pre = nm.substring(0,nm.lastIndexOf("."));
+        String pre = nm.substring(0, nm.lastIndexOf("."));
+        List<Command> found = new ArrayList<>();
         for(Command c:commands) {
+            if(pre.isEmpty()&&c.name().startsWith(last)) {
+                found.add(c);
+                continue;
+            }
+            if(pre.startsWith(c.name()) && (pre.charAt(c.name().length() + 1))=='.') {
 
+            }
         }
-        return new Command[0];
+        return found.toArray(new Command[0]);
     }
 
     public static void rawRun(final String task) {
@@ -44,11 +50,7 @@ public class Executor {
 
     public void init() {
         commands.add(new RunCommand());
-        try {
-            ((RunCommand)commands.get(0)).onCalled(new Variable[]{new Variable(Variable.Type.STRING,"test.bat")});
-        } catch (WrongTypeException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public static final String rawArg = "-raw";
@@ -56,8 +58,8 @@ public class Executor {
     public static final String testArg = "-test";
 
     public static void main(String[] args) {
-        Executor exec = new Executor();
-        exec.init();
+        theExecutor = new Executor();
+        getInstance().init();
         System.out.println(new File("").getAbsolutePath());
         for(int i = 0; i < args.length; i++) {
             if(args[i].equals(rawArg)&&i<args.length-1) {

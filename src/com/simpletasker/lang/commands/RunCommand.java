@@ -1,6 +1,7 @@
 package com.simpletasker.lang.commands;
 
 import com.simpletasker.common.exceptions.WrongTypeException;
+import com.simpletasker.lang.Task;
 import com.simpletasker.lang.variables.StringVariable;
 import com.simpletasker.lang.variables.Variable;
 
@@ -24,7 +25,7 @@ public class RunCommand extends Command{
     }
 
     @Override
-    public void onCalled(Variable[] params) throws WrongTypeException {
+    public void onCalled(Variable[] params,Task task) throws WrongTypeException {
         String s = ((StringVariable)params[0].castToSpecific(Variable.Type.STRING)).getActualValue();
         File selectedFile;
         if(s.startsWith("~")) {

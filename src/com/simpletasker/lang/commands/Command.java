@@ -19,7 +19,6 @@ public abstract class Command {
 
     private List<Command> children = new ArrayList<>();
     private int numParam = 0;
-    Task task;
 
 
     public Command(String name) {
@@ -32,11 +31,6 @@ public abstract class Command {
         parent.addChildren(this);
         this.parent = parent;
     }
-
-    public void setTask(Task task) {
-        this.task = task;
-    }
-
     private void addChildren(Command command) {
         children.add(command);
     }
@@ -61,5 +55,9 @@ public abstract class Command {
         return  numParam;
     }
 
-    public abstract void onCalled(Variable[] params) throws SimpleTaskException;
+    public abstract void onCalled(Variable[] params,Task task) throws SimpleTaskException;
+
+    public void invokeChildren(String pre, String last) {
+
+    }
 }
