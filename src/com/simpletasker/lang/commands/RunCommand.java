@@ -8,12 +8,8 @@ import com.simpletasker.lang.Variable;
 public class RunCommand extends Command{
 
 
-    public RunCommand(String name) {
-        super(name);
-    }
-
-    public RunCommand(Command parent, String name) {
-        super(parent, name);
+    public RunCommand() {
+        super("run");
     }
 
     @Override
@@ -23,6 +19,6 @@ public class RunCommand extends Command{
 
     @Override
     public void onCalled(Variable[] params) {
-
+        String s = params[0].toType(Variable.Type.STRING);
     }
 }
