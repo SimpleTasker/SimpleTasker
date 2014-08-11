@@ -1,9 +1,11 @@
 package com.simpletasker.lang;
 
 import com.simpletasker.common.exceptions.SimpleTaskException;
+import com.simpletasker.common.exceptions.WrongTypeException;
 import com.simpletasker.common.util.FileUtilities;
 import com.simpletasker.lang.commands.Command;
 import com.simpletasker.lang.commands.RunCommand;
+import com.simpletasker.lang.variables.StringVariable;
 import com.simpletasker.lang.variables.Variable;
 
 import java.io.File;
@@ -42,6 +44,11 @@ public class Executor {
 
     public void init() {
         commands.add(new RunCommand());
+        try {
+            ((RunCommand)commands.get(0)).onCalled(new Variable[]{new Variable(Variable.Type.STRING,"test.bat")});
+        } catch (WrongTypeException e) {
+            e.printStackTrace();
+        }
     }
 
     public static final String rawArg = "-raw";
@@ -49,6 +56,8 @@ public class Executor {
     public static final String testArg = "-test";
 
     public static void main(String[] args) {
+        Executor exec = new Executor();
+        exec.init();
         System.out.println(new File("").getAbsolutePath());
         for(int i = 0; i < args.length; i++) {
             if(args[i].equals(rawArg)&&i<args.length-1) {
