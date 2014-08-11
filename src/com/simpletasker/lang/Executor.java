@@ -1,8 +1,10 @@
 package com.simpletasker.lang;
 
+import com.simpletasker.common.exceptions.SimpleTaskException;
 import com.simpletasker.common.util.FileUtilities;
 import com.simpletasker.lang.commands.Command;
 import com.simpletasker.lang.commands.RunCommand;
+import com.simpletasker.lang.variables.Variable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ public class Executor {
      * @param nm
      * @return
      */
-    public Command[] getCommand(String nm) {
+    public Command[] getCommands(String nm) {
         String last = nm.substring(nm.lastIndexOf("."),nm.length()-1);
         String pre = nm.substring(0,nm.lastIndexOf("."));
         for(Command c:commands) {
@@ -29,8 +31,13 @@ public class Executor {
         return new Command[0];
     }
 
-    public static void rawRun(String task) {
-        new Task(task).run();
+    public static void rawRun(final String task) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new Task(task).run();
+            }
+        }).start();
     }
 
     public void init() {
