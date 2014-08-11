@@ -20,17 +20,27 @@ public class Variable {
         this.value = value;
     }
 
-    public String toType(Type retType) throws WrongTypeException {
+    public String getValueOfType(Type retType) throws WrongTypeException {
         if(this.type!=retType) {
             throw new WrongTypeException("Trying to return a " + retType.toString() + " but variable is type of " + type.toString());
         }
-        switch(type){
-            case STRING:
-                return value;
-
-        }
-        return "";
+        return value;
     }
+
+    public static Variable getTypeVariable(Type type,String value) {
+        switch (type) {
+            case STRING:
+                return new StringVariable(value);
+            case BOOL:
+                return new BooleanVariable(Boolean.parseBoolean(value));
+            case NUMBER:
+                return new DoubleVariable(Double.parseDouble(value));
+            case DATE:
+                return new DateVariable();
+        }
+        return new StringVariable("");
+    }
+
 
     public static enum Type {
         NUMBER,
