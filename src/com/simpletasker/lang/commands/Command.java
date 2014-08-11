@@ -13,6 +13,7 @@ import java.util.List;
 public abstract class Command {
 
     public static final String separator = ".";
+    private final Command parent;
 
     private String name;
 
@@ -23,11 +24,13 @@ public abstract class Command {
 
     public Command(String name) {
         this.name = name;
+        parent = null;
     }
 
     public Command(Command parent,String name) {
         this.name = name;
         parent.addChildren(this);
+        this.parent = parent;
     }
 
     public void setTask(Task task) {
@@ -39,8 +42,15 @@ public abstract class Command {
     }
 
 
-    public String getFullName() {
+    public String name() {
         return name;
+    }
+
+    public String getFullName() {
+        if(parent==null) {
+            return name();
+        }
+        return parent.getFullName() + name();
     }
 
     /**
