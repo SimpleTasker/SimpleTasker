@@ -5,12 +5,12 @@ import javax.print.DocFlavor;
 /**
  * Created by David on 9-8-2014.
  */
-public class Param {
+public class Variable {
 
     private Type type;
 
 
-    public Param(Type type) {
+    public Variable(Type type) {
         this.type = type;
     }
 
@@ -20,4 +20,6 @@ public class Param {
         BOOL,
         DATE;
     }
+
+
 }

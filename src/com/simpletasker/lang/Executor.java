@@ -1,5 +1,7 @@
 package com.simpletasker.lang;
 
+import com.simpletasker.lang.commands.Command;
+
 public class Executor {
 
     /**

@@ -1,4 +1,6 @@
-package com.simpletasker.lang;
+package com.simpletasker.lang.commands;
+
+import com.simpletasker.lang.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +8,7 @@ import java.util.List;
 /**
  * Created by David on 9-8-2014.
  */
-public class Command {
+public abstract class Command {
 
     public static final String separator = ".";
 
@@ -34,11 +36,13 @@ public class Command {
         return name;
     }
 
+    /**
+     * Should return minimal number of parameters for this command
+     * @return minimal number of parameters
+     */
     public int getNumParam() {
         return  numParam;
     }
 
-    public void onCalled(Param[] params) {
-
-    }
+    public abstract void onCalled(Variable[] params);
 }
