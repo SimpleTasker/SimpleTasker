@@ -55,7 +55,7 @@ public abstract class Command implements Comparable<Command>{
         return  numParam;
     }
 
-    public abstract void onCalled(Variable[] params,Task task) throws SimpleTaskException;
+    public abstract Variable onCalled(Variable[] params,Task task) throws SimpleTaskException;
 
     public void invokeChildren(String pre, String last) {
 

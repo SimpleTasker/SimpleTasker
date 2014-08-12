@@ -7,6 +7,7 @@ import com.simpletasker.common.exceptions.WrongTypeException;
  */
 public class Variable {
 
+    public static final Variable voidVariable = new Variable(Type.VOID);
     String value;
     private Type type;
 
@@ -29,6 +30,8 @@ public class Variable {
                 return new DoubleVariable(value);
             case DATE:
                 return new DateVariable(value);
+            case VOID:
+                return voidVariable;
         }
         return new StringVariable("");
     }
@@ -53,7 +56,8 @@ public class Variable {
         NUMBER,
         STRING,
         BOOL,
-        DATE;
+        DATE,
+        VOID;
 
         @Override
         public String toString() {
