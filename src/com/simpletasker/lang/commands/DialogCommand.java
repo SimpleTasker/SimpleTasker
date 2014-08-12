@@ -2,28 +2,24 @@ package com.simpletasker.lang.commands;
 
 import com.simpletasker.common.exceptions.SimpleTaskException;
 import com.simpletasker.lang.Task;
-import com.simpletasker.lang.variables.DoubleVariable;
 import com.simpletasker.lang.variables.Variable;
 
 /**
  * Created by David on 12-8-2014.
  */
-public class MathCommand extends Command {
-
-    public MathCommand() {
-        super("Math");
-        new Command(this,"pi") {
-
+public class DialogCommand extends Command {
+    public DialogCommand() {
+        super("Dialog");
+        new Command(this,"openSimple") {
             @Override
             public Variable onCalled(Variable[] params, Task task) throws SimpleTaskException {
-                return new DoubleVariable(Math.PI);
+                return Variable.voidVariable;
             }
         };
     }
 
-
     @Override
     public Variable onCalled(Variable[] params, Task task) throws SimpleTaskException {
-        return Variable.voidVariable;
+        return null;
     }
 }

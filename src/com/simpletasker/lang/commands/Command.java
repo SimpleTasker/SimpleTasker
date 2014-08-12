@@ -18,7 +18,6 @@ public abstract class Command implements Comparable<Command>{
     private String name;
 
     private List<Command> children = new ArrayList<>();
-    private int numParam = 0;
 
 
     public Command(String name) {
@@ -31,7 +30,7 @@ public abstract class Command implements Comparable<Command>{
         parent.addChildren(this);
         this.parent = parent;
     }
-    private void addChildren(Command command) {
+    public void addChildren(Command command) {
         children.add(command);
     }
 
@@ -52,7 +51,7 @@ public abstract class Command implements Comparable<Command>{
      * @return minimal number of parameters
      */
     public int getNumParam() {
-        return  numParam;
+        return  0;
     }
 
     public abstract Variable onCalled(Variable[] params,Task task) throws SimpleTaskException;
@@ -64,5 +63,9 @@ public abstract class Command implements Comparable<Command>{
     @Override
     public int compareTo(Command o) {
     	return name.compareTo(o.name);
+    }
+
+    public Command[] getChildren() {
+        return children.toArray(new Command[0]);
     }
 }

@@ -1,12 +1,12 @@
 package com.simpletasker.lang;
 
 import com.simpletasker.common.exceptions.TaskException;
-import com.simpletasker.common.util.FileUtilities;
 import com.simpletasker.lang.commands.Command;
+import com.simpletasker.lang.commands.DialogCommand;
 import com.simpletasker.lang.commands.MathCommand;
 import com.simpletasker.lang.commands.RunCommand;
 
-import java.io.File;
+import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +17,14 @@ public class Executor {
     public static final String testArg = "-test";
     private static final List<Command> commands = new ArrayList<>();
     private static Executor theExecutor;
+
+    public Executor() {
+        if(theExecutor!=null) {
+            return;
+        }
+        theExecutor = this;
+
+    }
 
     public static Executor getInstance() {
         return theExecutor;
@@ -36,16 +44,15 @@ public class Executor {
     }
 
     public static void main(String[] args) {
-        theExecutor = new Executor();
-        getInstance().init();
-        System.out.println(new File("").getAbsolutePath());
+       /* new Executor().init();
         for(int i = 0; i < args.length; i++) {
             if(args[i].equals(rawArg)&&i<args.length-1) {
                 rawRun(args[i+1]);
             } else if(args[i].equals(testArg)) {
                 rawRun(FileUtilities.getStringfromFile(new File("test.stsk")));
             }
-        }
+        }*/
+        JOptionPane.showMessageDialog(null, "Test");
     }
 
     /**
@@ -66,7 +73,11 @@ public class Executor {
                 continue;
             }
             if(pre.startsWith(c.name()) && (pre.charAt(c.name().length() + 1))=='.') {
-
+                for(Command cChill:c.getChildren()) {
+                    if(cChill.name().startsWith(last)) {
+                        found.add(cChill);
+                    }
+                }
             }
         }
         
@@ -79,6 +90,7 @@ public class Executor {
     public void init() {
         commands.add(new RunCommand());
         commands.add(new MathCommand());
+        commands.add(new DialogCommand());
     }
 
 
