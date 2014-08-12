@@ -3,6 +3,7 @@ package com.simpletasker.lang;
 import com.simpletasker.common.exceptions.TaskException;
 import com.simpletasker.common.util.FileUtilities;
 import com.simpletasker.lang.commands.Command;
+import com.simpletasker.lang.commands.MathCommand;
 import com.simpletasker.lang.commands.RunCommand;
 
 import java.io.File;
@@ -54,8 +55,10 @@ public class Executor {
      * @return a sorted array.
      */
     public Command[] getCommands(String nm) {
-        String last = nm.substring(nm.lastIndexOf("."),nm.length()-1);
-        String pre = nm.substring(0, nm.lastIndexOf("."));
+        int lastPoint = nm.lastIndexOf(".");
+        lastPoint = lastPoint < 0 ? 0 : lastPoint;
+        String last = nm.substring(lastPoint,nm.length()-1);
+        String pre = nm.substring(0, lastPoint);
         List<Command> found = new ArrayList<>();
         for(Command c:commands) {
             if(pre.isEmpty()&&c.name().startsWith(last)) {
@@ -75,7 +78,7 @@ public class Executor {
 
     public void init() {
         commands.add(new RunCommand());
-
+        commands.add(new MathCommand());
     }
 
 
