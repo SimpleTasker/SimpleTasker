@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by David on 9-8-2014.
  */
-public abstract class Command {
+public abstract class Command implements Comparable<Command>{
 
     public static final String separator = ".";
     private final Command parent;
@@ -59,5 +59,10 @@ public abstract class Command {
 
     public void invokeChildren(String pre, String last) {
 
+    }
+    
+    @Override
+    public int compareTo(Command o) {
+    	return name.compareTo(o.name);
     }
 }

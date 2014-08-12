@@ -6,6 +6,7 @@ import com.simpletasker.lang.commands.RunCommand;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Executor {
@@ -21,7 +22,7 @@ public class Executor {
      * Will return all possible commands starting with the string given.<br/>
      * For example "Ma" will return Math and "Math." will return all possible commands in the Math tree
      * @param nm
-     * @return
+     * @return a sorted array.
      */
     public Command[] getCommands(String nm) {
         String last = nm.substring(nm.lastIndexOf("."),nm.length()-1);
@@ -36,7 +37,11 @@ public class Executor {
 
             }
         }
-        return found.toArray(new Command[0]);
+        
+        //always get a sorted array.
+        Command[] foundArr = found.toArray(new Command[0]);
+        Arrays.sort(foundArr);
+        return foundArr;
     }
 
     public static void rawRun(final String task) {
