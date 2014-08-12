@@ -1,6 +1,7 @@
 package com.simpletasker.ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -66,8 +67,8 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		suggestionsFrame = new JFrame();
 		suggestionsFrame.setBounds(50, 50, 50, 50);
 		suggestionsFrame.setVisible(false);
-		suggestionsFrame.setAlwaysOnTop(true);    
-		
+		suggestionsFrame.setAlwaysOnTop(true);  
+		//suggestionsFrame.setUndecorated(true);
 		
 		suggestionsPanel = new JPanel();
 		suggestionsPanel.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -100,17 +101,28 @@ public class CodePane extends JScrollPane implements DocumentListener,
 			return;
 		// give the argument word so we do not have to call
 		// getCurrentlytypedWord() again.
+		int sizeBefore = suggestions.size();
 		updateSuggestions(word);
 		if (suggestions.size() == 0) {
 			if (suggestionsIsVisable())
 				removeDropdownMenu();
 			return;
 		}
-		if (suggestionsIsVisable()) {
-
-		} else {
+		boolean sizeChanged = suggestions.size() != sizeBefore;
+		if (suggestionsIsVisable() && !sizeChanged) {
+			updateSelected();
+		}else{
+			suggestionsPanel.removeAll();
+			for(Suggestion s : suggestions){
+				suggestionsPanel.add(s);
+			}
 			suggestionsFrame.setVisible(true);
+			suggestionsFrame.setBounds(100, 100, 200, 30*suggestions.size());
 		}
+	}
+
+	private void updateSelected() {
+		
 	}
 
 	private boolean suggestionsIsVisable() {
@@ -181,8 +193,11 @@ public class CodePane extends JScrollPane implements DocumentListener,
 
 		private static final long serialVersionUID = 3273864444932843439L;
 
+		public boolean isSelected = false;
+		
 		public Suggestion(String name) {
 			super(name);
+			setPreferredSize(new Dimension(220, 30));
 		}
 
 		@Override
