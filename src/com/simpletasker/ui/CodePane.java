@@ -1,25 +1,26 @@
 package com.simpletasker.ui;
 
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Pattern;
 
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.plaf.basic.BasicTextUI.BasicCaret;
-
-import sun.misc.Regexp;
 
 import com.simpletasker.lang.Executor;
-import com.simpletasker.lang.commands.Command;
-import com.sun.xml.internal.ws.org.objectweb.asm.Label;
 
 @SuppressWarnings("unused")
 public class CodePane extends JScrollPane implements DocumentListener,
@@ -30,6 +31,9 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	private JTextArea lineNumbers;
 	private JTextArea codeArea;
 
+	private JFrame suggestionsFrame;
+	private JPanel suggestionsPanel;
+
 	// the current caret position
 	private int caretDot = 0;
 
@@ -38,9 +42,6 @@ public class CodePane extends JScrollPane implements DocumentListener,
 
 	// tells if the code/program is chaning the text in the codeArea JTextArea.
 	private boolean codeIsChaningText = false;
-
-	// tells if the suggestions popup thinyg is visable or not.
-	private boolean suggestionsIsVisable = false;
 
 	/**
 	 * The sellected suggestion. If value is -1 than there is no suggestion
@@ -61,6 +62,19 @@ public class CodePane extends JScrollPane implements DocumentListener,
 
 		codeArea.getDocument().addDocumentListener(this);
 		codeArea.addCaretListener(this);
+
+		suggestionsFrame = new JFrame();
+		suggestionsFrame.setBounds(50, 50, 50, 50);
+		suggestionsFrame.setVisible(false);
+		suggestionsFrame.setAlwaysOnTop(true);    
+		
+		
+		suggestionsPanel = new JPanel();
+		suggestionsPanel.setBorder(BorderFactory.createRaisedBevelBorder());
+		suggestionsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+		suggestionsFrame.setContentPane(suggestionsPanel);
+
 	}
 
 	/**
@@ -75,6 +89,11 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		}
 	};
 
+	/**
+	 * updates the dropDownSuggestionsMenu. If the menu is invisible and should
+	 * be visible, it will be shown. And if it was visible but should not be
+	 * visible it is removed.
+	 */
 	private void updateDropdownMenu() {
 		String word = getCurrentlyTypedWord();
 		if (word.equals(""))
@@ -82,17 +101,39 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		// give the argument word so we do not have to call
 		// getCurrentlytypedWord() again.
 		updateSuggestions(word);
-		System.out.println(Arrays.toString(suggestions.toArray()));
+		if (suggestions.size() == 0) {
+			if (suggestionsIsVisable())
+				removeDropdownMenu();
+			return;
+		}
+		if (suggestionsIsVisable()) {
+
+		} else {
+			suggestionsFrame.setVisible(true);
+		}
+	}
+
+	private boolean suggestionsIsVisable() {
+		return suggestionsFrame.isVisible();
+	}
+
+	private void removeDropdownMenu() {
+		suggestions.clear();
+		suggestionsPanel.removeAll();
+		suggestionsFrame.setVisible(false);
 	}
 
 	private void updateSuggestions(String word) {
 		suggestions.clear();
 		Executor exe = new Executor();
-		System.out.println(word);
-		Command[] cmds = exe.getCommands(word);
-		for (Command com : cmds) {
-			suggestions.add(new Suggestion(com.getFullName()));
-		}
+
+		// Command[] cmds = exe.getCommands(word);
+		// for (Command com : cmds) {
+		// suggestions.add(new Suggestion(com.getFullName()));
+		// }
+		suggestions.add(new Suggestion("aaa"));
+		suggestions.add(new Suggestion("bbb"));
+		suggestions.add(new Suggestion("ccc"));
 	}
 
 	/**
@@ -143,10 +184,10 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		public Suggestion(String name) {
 			super(name);
 		}
-		
+
 		@Override
 		public String toString() {
-			return "["+getText()+"]";
+			return "[" + getText() + "]";
 		}
 
 	}
@@ -163,7 +204,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		Point temp = codeArea.getCaret().getMagicCaretPosition();
 		if (temp == null || codeIsChaningText)
 			return;
-		if (!suggestionsIsVisable)
+		if (!suggestionsIsVisable())
 			caretPos = temp;
 		SwingUtilities.invokeLater(onTextChange);
 	}
@@ -173,7 +214,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		Point temp = codeArea.getCaret().getMagicCaretPosition();
 		if (temp == null || codeIsChaningText)
 			return;
-		if (!suggestionsIsVisable)
+		if (!suggestionsIsVisable())
 			caretPos = temp;
 		SwingUtilities.invokeLater(onTextChange);
 	}
@@ -183,7 +224,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		Point temp = codeArea.getCaret().getMagicCaretPosition();
 		if (temp == null || codeIsChaningText)
 			return;
-		if (!suggestionsIsVisable)
+		if (!suggestionsIsVisable())
 			caretPos = temp;
 		SwingUtilities.invokeLater(onTextChange);
 	}
