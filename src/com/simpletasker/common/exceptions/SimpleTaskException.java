@@ -5,7 +5,6 @@ package com.simpletasker.common.exceptions;
  */
 public class SimpleTaskException extends Exception{
 
-
     public SimpleTaskException() {
         super();
     }

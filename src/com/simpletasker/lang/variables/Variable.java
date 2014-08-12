@@ -7,9 +7,8 @@ import com.simpletasker.common.exceptions.WrongTypeException;
  */
 public class Variable {
 
-    private Type type;
-
     String value;
+    private Type type;
 
     public Variable(Type type) {
         this(type,"");
@@ -18,17 +17,6 @@ public class Variable {
     public Variable(Type type,String value) {
         this.type = type;
         this.value = value;
-    }
-
-    public String getValueOfType(Type retType) throws WrongTypeException {
-        if(this.type!=retType) {
-            throw new WrongTypeException("Trying to return a " + retType.toString() + " but variable is type of " + type.toString());
-        }
-        return value;
-    }
-
-    public Variable castToSpecific(Type type) throws WrongTypeException {
-        return getTypeVariable(type,getValueOfType(type));
     }
 
     public static Variable getTypeVariable(Type type,String value) {
@@ -45,6 +33,21 @@ public class Variable {
         return new StringVariable("");
     }
 
+    public String getValueOfType(Type retType) throws WrongTypeException {
+        if(this.type!=retType) {
+            throw new WrongTypeException("Trying to return a " + retType.toString() + " but variable is type of " + type.toString());
+        }
+        return value;
+    }
+
+    public Variable castToSpecific(Type type) throws WrongTypeException {
+        return getTypeVariable(type,getValueOfType(type));
+    }
+
+    @Override
+    public String toString() {
+        return "[Type=" + type.toString() + ",value=" + value + "]";
+    }
 
     public static enum Type {
         NUMBER,
@@ -57,6 +60,4 @@ public class Variable {
             return name().substring(0,1) + name().substring(1).toLowerCase();
         }
     }
-
-
 }
