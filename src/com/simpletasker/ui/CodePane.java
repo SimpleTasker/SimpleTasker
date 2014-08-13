@@ -44,6 +44,8 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	// tells if the code/program is chaning the text in the codeArea JTextArea.
 	private boolean codeIsChaningText = false;
 
+	private int selected = 0;
+	
 	/**
 	 * The sellected suggestion. If value is -1 than there is no suggestion
 	 * selected.
@@ -122,7 +124,14 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	}
 
 	private void updateSelected() {
-		
+		int i = 0;
+		for(Suggestion s : suggestions){
+			if(i == selected)
+				s.isSelected = true;
+			else
+				s.isSelected = false;
+			i++;
+		}
 	}
 
 	private boolean suggestionsIsVisable() {
