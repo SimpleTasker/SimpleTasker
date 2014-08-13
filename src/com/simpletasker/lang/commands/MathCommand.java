@@ -31,12 +31,10 @@ public class MathCommand extends Command {
             }
         };
         new Command(this,"abs") {
-
             @Override
             public int getNumParam() {
                 return 1;
             }
-
             @Override
             public Variable onCalled(Variable[] params, Task task) throws SimpleTaskException {
                 return new DoubleVariable(Math.abs(params[0].asNumber()));
