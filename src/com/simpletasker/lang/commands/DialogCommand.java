@@ -2,7 +2,6 @@ package com.simpletasker.lang.commands;
 
 import com.simpletasker.common.exceptions.SimpleTaskException;
 import com.simpletasker.lang.Task;
-import com.simpletasker.lang.variables.StringVariable;
 import com.simpletasker.lang.variables.Variable;
 
 import javax.swing.JOptionPane;
@@ -22,7 +21,7 @@ public class DialogCommand extends Command {
 
             @Override
             public Variable onCalled(Variable[] params, Task task) throws SimpleTaskException {
-                String message = ((StringVariable)params[0].castToSpecific(Variable.Type.STRING)).getActualValue();
+                String message = params[0].asString();
                 JOptionPane.showMessageDialog(null,message);
                 return Variable.voidVariable;
             }

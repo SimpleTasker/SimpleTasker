@@ -2,7 +2,6 @@ package com.simpletasker.lang.commands;
 
 import com.simpletasker.common.exceptions.WrongTypeException;
 import com.simpletasker.lang.Task;
-import com.simpletasker.lang.variables.StringVariable;
 import com.simpletasker.lang.variables.Variable;
 
 import java.awt.Desktop;
@@ -26,7 +25,7 @@ public class RunCommand extends Command{
 
     @Override
     public Variable onCalled(Variable[] params,Task task) throws WrongTypeException {
-        String s = ((StringVariable)params[0].castToSpecific(Variable.Type.STRING)).getActualValue();
+        String s = params[0].asString();
         File selectedFile;
         if(s.startsWith("~")) {
             File dir = task.getLocation();

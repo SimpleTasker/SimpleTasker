@@ -2,6 +2,8 @@ package com.simpletasker.lang.variables;
 
 import com.simpletasker.common.exceptions.WrongTypeException;
 
+import java.util.Date;
+
 /**
  * Created by David on 9-8-2014.
  */
@@ -66,6 +68,22 @@ public class Variable {
         return "[Type=" + type.toString() + ",value=" + value + "]";
     }
 
+    public String asString() throws WrongTypeException {
+        return ((StringVariable)castToSpecific(Variable.Type.STRING)).getActualValue();
+    }
+
+    public boolean asBool() throws WrongTypeException {
+        return ((BooleanVariable)castToSpecific(Variable.Type.BOOL)).getActualValue();
+    }
+
+    public double asNumber() throws WrongTypeException {
+        return ((DoubleVariable)castToSpecific(Type.NUMBER)).getActualValue();
+    }
+
+    public Date asDate() throws WrongTypeException {
+        return ((DateVariable)castToSpecific(Type.DATE)).getActualValue();
+    }
+
     public static enum Type {
         NUMBER,
         STRING,
@@ -78,4 +96,5 @@ public class Variable {
             return name().substring(0,1) + name().substring(1).toLowerCase();
         }
     }
+
 }
