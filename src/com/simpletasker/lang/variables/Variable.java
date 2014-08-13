@@ -36,6 +36,20 @@ public class Variable {
         return new StringVariable("");
     }
 
+    public static Variable getVariableFromString(String in) {
+        String var = in.replaceAll("\\s","");
+        if(var.startsWith("\"") && var.endsWith("\"")){
+            return new StringVariable(var.substring(1,var.length()-2));
+        }
+        if(var.equalsIgnoreCase("true") || var.equalsIgnoreCase("false")) {
+            return new BooleanVariable(var);
+        }
+        if(var.matches("[\\d|.|,]*")) {
+            return new DoubleVariable(var);
+        }
+        return voidVariable;
+    }
+
     public String getValueOfType(Type retType) throws WrongTypeException {
         if(this.type!=retType) {
             throw new WrongTypeException("Trying to return a " + retType.toString() + " but variable is type of " + type.toString());

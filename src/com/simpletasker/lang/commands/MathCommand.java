@@ -13,7 +13,6 @@ public class MathCommand extends Command {
     public MathCommand() {
         super("Math");
         new Command(this,"pi") {
-
             @Override
             public Variable onCalled(Variable[] params, Task task) throws SimpleTaskException {
                 return new DoubleVariable(Math.PI);
