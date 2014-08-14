@@ -49,12 +49,7 @@ public class TaskInfo {
     }
 
     public void execute() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Executor.getInstance().runTask(task);
-            }
-        }).start();
+        Executor.getInstance().runTaskThread(task);
     }
 
 }

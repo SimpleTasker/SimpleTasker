@@ -68,7 +68,7 @@ public class Executor {
     public Command[] getCommands(String nm) {
         int lastPoint = nm.lastIndexOf(".");
         lastPoint = lastPoint < 0 ? 0 : lastPoint;
-        String last = nm.substring(lastPoint,nm.length()-1);
+        String last = nm.substring(lastPoint,nm.length());
         String pre = nm.substring(0, lastPoint);
         List<Command> found = new ArrayList<>();
         for(Command c:commands) {
@@ -98,13 +98,18 @@ public class Executor {
     }
 
 
-    public void runTask(Task task) {
-        try {
-            task.run();
-        } catch (TaskException e) {
-            showError(e);
-            e.printStackTrace();
-        }
+    public void runTaskThread(final Task task) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    task.run();
+                } catch (TaskException e) {
+                    showError(e);
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private void showError(TaskException e) {
