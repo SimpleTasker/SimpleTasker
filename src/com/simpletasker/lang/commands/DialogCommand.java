@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  */
 public class DialogCommand extends Command {
     public DialogCommand() {
-        super("Dialog");
+        super("dialog");
         new Command(this,"openSimple") {
 
             @Override

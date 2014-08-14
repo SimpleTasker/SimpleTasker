@@ -7,6 +7,7 @@ import com.simpletasker.lang.commands.DialogCommand;
 import com.simpletasker.lang.commands.MathCommand;
 import com.simpletasker.lang.commands.RunCommand;
 
+import javax.swing.JOptionPane;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +46,10 @@ public class Executor {
     }
 
     public static void main(String[] args) {
-       new Executor().init();
+        new Executor().init();
+        Executor.getInstance().test("math.");
+        Executor.getInstance().test("d");
+        Executor.getInstance().test("r");
         for(int i = 0; i < args.length; i++) {
             if(args[i].equals(rawArg)&&i<args.length-1) {
                 rawRun(args[i+1]);
@@ -72,7 +76,7 @@ public class Executor {
                 found.add(c);
                 continue;
             }
-            if(pre.startsWith(c.name()) && (pre.charAt(c.name().length() + 1))=='.') {
+            if(pre.startsWith(c.name()) && (nm.charAt(c.name().length()))=='.') {
                 for(Command cChill:c.getChildren()) {
                     if(cChill.name().startsWith(last)) {
                         found.add(cChill);
@@ -94,4 +98,24 @@ public class Executor {
     }
 
 
+    public void runTask(Task task) {
+        try {
+            task.run();
+        } catch (TaskException e) {
+            showError(e);
+            e.printStackTrace();
+        }
+    }
+
+    private void showError(TaskException e) {
+        JOptionPane.showMessageDialog(null,e.getMessage());
+    }
+
+    private void test(String nm) {
+        System.out.println("Name " + nm);
+        for(Command c:getCommands(nm)) {
+            System.out.print(c.getFullName() + ",");
+        }
+        System.out.println();
+    }
 }

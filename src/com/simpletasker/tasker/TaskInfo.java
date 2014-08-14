@@ -1,6 +1,9 @@
 package com.simpletasker.tasker;
 
+import com.simpletasker.lang.Executor;
 import com.simpletasker.lang.Task;
+
+import java.io.File;
 
 /**
  * Created by David on 13-8-2014.
@@ -8,6 +11,8 @@ import com.simpletasker.lang.Task;
 public class TaskInfo {
 
     private Task task;
+
+    private File location;
 
     private boolean activated = true;
 
@@ -17,8 +22,9 @@ public class TaskInfo {
 
     private boolean[] minutes = new boolean[60];
 
-    public TaskInfo(Task task) {
+    public TaskInfo(Task task,File loc) {
         this.task = task;
+        location = loc;
     }
 
     public void scheduleDays(boolean[] newDays) {
@@ -42,5 +48,13 @@ public class TaskInfo {
         days = newMinutes;
     }
 
+    public void execute() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Executor.getInstance().runTask(task);
+            }
+        }).start();
+    }
 
 }

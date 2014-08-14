@@ -43,7 +43,7 @@ public abstract class Command implements Comparable<Command>{
         if(parent==null) {
             return name();
         }
-        return parent.getFullName() + name();
+        return parent.getFullName() + "." + name();
     }
 
     /**

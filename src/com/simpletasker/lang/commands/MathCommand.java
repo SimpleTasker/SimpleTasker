@@ -11,7 +11,7 @@ import com.simpletasker.lang.variables.Variable;
 public class MathCommand extends Command {
 
     public MathCommand() {
-        super("Math");
+        super("math");
         new Command(this,"pi") {
             @Override
             public Variable onCalled(Variable[] params, Task task) throws SimpleTaskException {
