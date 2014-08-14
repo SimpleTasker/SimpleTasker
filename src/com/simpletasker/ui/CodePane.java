@@ -130,8 +130,10 @@ public class CodePane extends JScrollPane implements DocumentListener,
 				s.isSelected = true;
 			else
 				s.isSelected = false;
+			s.revalidate();
 			i++;
 		}
+		
 	}
 
 	private boolean suggestionsIsVisable() {
