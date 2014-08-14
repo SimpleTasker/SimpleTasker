@@ -1,6 +1,7 @@
 package com.simpletasker.ui;
 
 import com.simpletasker.lang.Executor;
+import com.simpletasker.lang.commands.Command;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
@@ -141,14 +143,13 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	private void updateSuggestions(String word) {
 		suggestions.clear();
 		Executor exe = Executor.getInstance();
-
-		// Command[] cmds = exe.getCommands(word);
-		// for (Command com : cmds) {
-		// suggestions.add(new Suggestion(com.getFullName()));
-		// }
-		suggestions.add(new Suggestion("aaa"));
-		suggestions.add(new Suggestion("bbb"));
-		suggestions.add(new Suggestion("ccc"));
+		System.out.println("word: " + word);
+		Command[] cmds = exe.getCommands(word);
+		for (Command com : cmds) {
+			suggestions.add(new Suggestion(com.getFullName()));
+			System.out.println("cmd: " + com.getFullName());
+		}
+		System.out.println("--------");
 	}
 
 	/**
