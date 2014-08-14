@@ -1,27 +1,23 @@
 package com.simpletasker.ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.regex.Pattern;
+import com.simpletasker.lang.Executor;
 
 import javax.swing.BorderFactory;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
-import com.simpletasker.lang.Executor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class CodePane extends JScrollPane implements DocumentListener,
@@ -43,15 +39,23 @@ public class CodePane extends JScrollPane implements DocumentListener,
 
 	// tells if the code/program is chaning the text in the codeArea JTextArea.
 	private boolean codeIsChaningText = false;
-
+	/**
+	 * Called when the user changes the content of the {@link #codeArea}
+	 */
+	private Runnable onTextChange = new Runnable() {
+		@Override
+		public void run() {
+			codeIsChaningText = true;
+			updateDropdownMenu();
+			codeIsChaningText = false;
+		}
+	};
 	private int selected = 0;
-	
 	/**
 	 * The sellected suggestion. If value is -1 than there is no suggestion
 	 * selected.
 	 */
 	private int slectedSuggestion = -1;
-
 	private ArrayList<Suggestion> suggestions = new ArrayList<>();
 
 	public CodePane() {
@@ -69,9 +73,9 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		suggestionsFrame = new JFrame();
 		suggestionsFrame.setBounds(50, 50, 50, 50);
 		suggestionsFrame.setVisible(false);
-		suggestionsFrame.setAlwaysOnTop(true);  
+		suggestionsFrame.setAlwaysOnTop(true);
 		//suggestionsFrame.setUndecorated(true);
-		
+
 		suggestionsPanel = new JPanel();
 		suggestionsPanel.setBorder(BorderFactory.createRaisedBevelBorder());
 		suggestionsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -79,18 +83,6 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		suggestionsFrame.setContentPane(suggestionsPanel);
 
 	}
-
-	/**
-	 * Called when the user changes the content of the {@link #codeArea}
-	 */
-	private Runnable onTextChange = new Runnable() {
-		@Override
-		public void run() {
-			codeIsChaningText = true;
-			updateDropdownMenu();
-			codeIsChaningText = false;
-		}
-	};
 
 	/**
 	 * updates the dropDownSuggestionsMenu. If the menu is invisible and should
@@ -148,7 +140,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 
 	private void updateSuggestions(String word) {
 		suggestions.clear();
-		Executor exe = new Executor();
+		Executor exe = Executor.getInstance();
 
 		// Command[] cmds = exe.getCommands(word);
 		// for (Command com : cmds) {
@@ -200,24 +192,6 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	// CLASSES
 	// .............................................
 
-	private class Suggestion extends JLabel {
-
-		private static final long serialVersionUID = 3273864444932843439L;
-
-		public boolean isSelected = false;
-		
-		public Suggestion(String name) {
-			super(name);
-			setPreferredSize(new Dimension(220, 30));
-		}
-
-		@Override
-		public String toString() {
-			return "[" + getText() + "]";
-		}
-
-	}
-
 	// LISTENERS
 	// .............................................
 	@Override
@@ -253,5 +227,23 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		if (!suggestionsIsVisable())
 			caretPos = temp;
 		SwingUtilities.invokeLater(onTextChange);
+	}
+
+	private class Suggestion extends JLabel {
+
+		private static final long serialVersionUID = 3273864444932843439L;
+
+		public boolean isSelected = false;
+
+		public Suggestion(String name) {
+			super(name);
+			setPreferredSize(new Dimension(220, 30));
+		}
+
+		@Override
+		public String toString() {
+			return "[" + getText() + "]";
+		}
+
 	}
 }

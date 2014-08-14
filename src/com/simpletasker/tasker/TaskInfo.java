@@ -14,7 +14,7 @@ public class TaskInfo {
 
     private File location;
 
-    private boolean activated = true;
+    private boolean enabled = true;
 
     private boolean[] days = new boolean[7];
 
@@ -25,6 +25,7 @@ public class TaskInfo {
     public TaskInfo(Task task,File loc) {
         this.task = task;
         location = loc;
+        task.setLocation(location);
     }
 
     public void scheduleDays(boolean[] newDays) {
@@ -52,4 +53,14 @@ public class TaskInfo {
         Executor.getInstance().runTaskThread(task);
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public boolean runAt(int day,int hour,int minute) {
+        if(days[day] && hours[hour] && minutes[minute]) {
+            return true;
+        }
+        return false;
+    }
 }

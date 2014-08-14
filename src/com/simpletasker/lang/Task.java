@@ -18,14 +18,14 @@ public class Task {
     }
 
     public void run() throws TaskException {
-        String[] lines = task.split("\\n?\\r");
+        String[] lines = task.split("\\r?\\n|\\r");
         int line = 0;
         for(String s:lines) {
             String[] operations = s.split(";");
             for(String current:operations) {
                 String nm = current.substring(0,current.indexOf("("));
                 Command[] commandsFound = Executor.getInstance().getCommands(nm);
-                if(commandsFound.length != 0) {
+                if(commandsFound.length != 1) {
                     throw new TaskException("Amount of commands found too large, Name=" + nm +", commands found=" + commandsFound.length,line);
                 }
                 Command command = commandsFound[0];

@@ -18,14 +18,9 @@ public class Executor {
     public static final String rawArg = "-raw";
     public static final String testArg = "-test";
     private static final List<Command> commands = new ArrayList<>();
-    private static Executor theExecutor;
+    private static Executor theExecutor = new Executor();
 
-    public Executor() {
-        if(theExecutor!=null) {
-            return;
-        }
-        theExecutor = this;
-
+    private Executor() {
     }
 
     public static Executor getInstance() {
@@ -67,7 +62,7 @@ public class Executor {
      */
     public Command[] getCommands(String nm) {
         int lastPoint = nm.lastIndexOf(".");
-        lastPoint = lastPoint < 0 ? 0 : lastPoint;
+        lastPoint = lastPoint < 0 ? 0 : lastPoint + 1;
         String last = nm.substring(lastPoint,nm.length());
         String pre = nm.substring(0, lastPoint);
         List<Command> found = new ArrayList<>();
@@ -76,7 +71,7 @@ public class Executor {
                 found.add(c);
                 continue;
             }
-            if(pre.startsWith(c.name()) && (nm.charAt(c.name().length()))=='.') {
+            if(pre.startsWith(c.name() + '.')) {
                 for(Command cChill:c.getChildren()) {
                     if(cChill.name().startsWith(last)) {
                         found.add(cChill);
