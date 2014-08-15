@@ -7,20 +7,20 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.simpletasker.lang.Executor;
+import com.simpletasker.lang.commands.Command;
 
 @SuppressWarnings("unused")
 public class CodePane extends JScrollPane implements DocumentListener,
@@ -31,7 +31,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	private JTextArea lineNumbers;
 	private JTextArea codeArea;
 
-	private JFrame suggestionsFrame;
+	private JWindow suggestionsFrame;
 	private JPanel suggestionsPanel;
 
 	// the current caret position
@@ -63,11 +63,12 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		codeArea.getDocument().addDocumentListener(this);
 		codeArea.addCaretListener(this);
 
-		suggestionsFrame = new JFrame();
+		suggestionsFrame = new JWindow();
 		suggestionsFrame.setBounds(50, 50, 50, 50);
 		suggestionsFrame.setVisible(false);
 		suggestionsFrame.setAlwaysOnTop(true);    
 		
+		//suggestionsFrame.getRootPane().setBorder(BorderFactory.create);
 		
 		suggestionsPanel = new JPanel();
 		suggestionsPanel.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -127,10 +128,10 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		suggestions.clear();
 		Executor exe = new Executor();
 
-		// Command[] cmds = exe.getCommands(word);
-		// for (Command com : cmds) {
-		// suggestions.add(new Suggestion(com.getFullName()));
-		// }
+		 Command[] cmds = exe.getCommands(word);
+		 for (Command com : cmds) {
+		 suggestions.add(new Suggestion(com.getFullName()));
+		 }
 		suggestions.add(new Suggestion("aaa"));
 		suggestions.add(new Suggestion("bbb"));
 		suggestions.add(new Suggestion("ccc"));
