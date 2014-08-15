@@ -2,8 +2,6 @@ package com.simpletasker.tasker;
 
 import com.simpletasker.common.util.FileUtilities;
 
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.AWTException;
 import java.awt.Image;
 import java.awt.MenuItem;
@@ -57,12 +55,6 @@ public class SimpleTasker implements Runnable {
         initDone = true;
         if(scheduledFuture==null){
             scheduledFuture = scheduler.scheduleAtFixedRate(getInstance(), 0, 1, TimeUnit.MINUTES);
-        }
-
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
         }
 
         String baseFolder = "res/icons/";
@@ -123,6 +115,13 @@ public class SimpleTasker implements Runnable {
     }
 
     public void run() {
+        if(tasks.isEmpty()) {
+            trayTasker.setImage(noText);
+            return;
+        }
+        if(!tasks.isEmpty() && trayTasker!=null) {
+            trayTasker.setImage(textGreen);
+        }
         Calendar calendar = Calendar.getInstance();
         int day = (calendar.get(Calendar.DAY_OF_WEEK) + 5)%7;
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -135,6 +134,9 @@ public class SimpleTasker implements Runnable {
                 }
             }
         }
+        if(trayTasker!=null) {
+            trayTasker.setImage(text);
+        }
     }
 
     public void exit() {
@@ -144,5 +146,7 @@ public class SimpleTasker implements Runnable {
             systemTray.remove(trayTasker);
         }
     }
+
+
 
 }
