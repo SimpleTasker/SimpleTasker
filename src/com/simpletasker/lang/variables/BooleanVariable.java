@@ -4,6 +4,11 @@ package com.simpletasker.lang.variables;
  * Created by David on 11-8-2014.
  */
 public class BooleanVariable extends Variable {
+
+    public BooleanVariable(boolean b) {
+        this(b ? "true" : "false");
+    }
+
     public BooleanVariable(String s) {
         super(Type.BOOL);
         this.value = s;

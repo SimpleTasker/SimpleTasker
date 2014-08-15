@@ -4,6 +4,11 @@ package com.simpletasker.lang.variables;
  * Created by David on 11-8-2014.
  */
 public class DoubleVariable extends Variable {
+
+    public DoubleVariable(double d) {
+        this(Double.toString(d));
+    }
+
     public DoubleVariable(String s) {
         super(Type.NUMBER);
         this.value = s;

@@ -2,6 +2,8 @@ package com.simpletasker.lang.variables;
 
 import com.simpletasker.common.exceptions.WrongTypeException;
 
+import java.util.Date;
+
 /**
  * Created by David on 9-8-2014.
  */
@@ -36,6 +38,20 @@ public class Variable {
         return new StringVariable("");
     }
 
+    public static Variable getVariableFromString(String in) {
+        String var = in.replaceAll("\\s","");
+        if(var.startsWith("\"") && var.endsWith("\"")){
+            return new StringVariable(var.substring(1,var.length()-2));
+        }
+        if(var.equalsIgnoreCase("true") || var.equalsIgnoreCase("false")) {
+            return new BooleanVariable(var);
+        }
+        if(var.matches("[\\d|.|,]*")) {
+            return new DoubleVariable(var);
+        }
+        return voidVariable;
+    }
+
     public String getValueOfType(Type retType) throws WrongTypeException {
         if(this.type!=retType) {
             throw new WrongTypeException("Trying to return a " + retType.toString() + " but variable is type of " + type.toString());
@@ -52,6 +68,22 @@ public class Variable {
         return "[Type=" + type.toString() + ",value=" + value + "]";
     }
 
+    public String asString() throws WrongTypeException {
+        return ((StringVariable)castToSpecific(Variable.Type.STRING)).getActualValue();
+    }
+
+    public boolean asBool() throws WrongTypeException {
+        return ((BooleanVariable)castToSpecific(Variable.Type.BOOL)).getActualValue();
+    }
+
+    public double asNumber() throws WrongTypeException {
+        return ((DoubleVariable)castToSpecific(Type.NUMBER)).getActualValue();
+    }
+
+    public Date asDate() throws WrongTypeException {
+        return ((DateVariable)castToSpecific(Type.DATE)).getActualValue();
+    }
+
     public static enum Type {
         NUMBER,
         STRING,
@@ -64,4 +96,5 @@ public class Variable {
             return name().substring(0,1) + name().substring(1).toLowerCase();
         }
     }
+
 }

@@ -8,6 +8,10 @@ import java.util.Date;
  */
 public class DateVariable extends Variable {
 
+    public DateVariable(Date d) {
+        this(d.toString());
+    }
+
     public DateVariable(String s) {
         super(Type.DATE);
         this.value = s;
