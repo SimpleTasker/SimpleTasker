@@ -25,7 +25,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-
 @SuppressWarnings("unused")
 public class CodePane extends JScrollPane implements DocumentListener,
 		CaretListener {
@@ -81,10 +80,10 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		suggestionsFrame.setBounds(50, 50, 50, 50);
 		suggestionsFrame.setVisible(false);
 
-		suggestionsFrame.setAlwaysOnTop(true);    
-		
-		//suggestionsFrame.getRootPane().setBorder(BorderFactory.create);
-		//suggestionsFrame.setUndecorated(true);
+		suggestionsFrame.setAlwaysOnTop(true);
+
+		// suggestionsFrame.getRootPane().setBorder(BorderFactory.create);
+		// suggestionsFrame.setUndecorated(true);
 
 		suggestionsPanel = new JPanel();
 		suggestionsPanel.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -115,27 +114,27 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		boolean sizeChanged = suggestions.size() != sizeBefore;
 		if (suggestionsIsVisable() && !sizeChanged) {
 			updateSelected();
-		}else{
+		} else {
 			suggestionsPanel.removeAll();
-			for(Suggestion s : suggestions){
+			for (Suggestion s : suggestions) {
 				suggestionsPanel.add(s);
 			}
 			suggestionsFrame.setVisible(true);
-			suggestionsFrame.setBounds(100, 100, 200, 30*suggestions.size());
+			suggestionsFrame.setBounds(100, 100, 200, 30 * suggestions.size());
 		}
 	}
 
 	private void updateSelected() {
 		int i = 0;
-		for(Suggestion s : suggestions){
-			if(i == selected)
+		for (Suggestion s : suggestions) {
+			if (i == selected)
 				s.isSelected = true;
 			else
 				s.isSelected = false;
 			s.revalidate();
 			i++;
 		}
-		
+
 	}
 
 	private boolean suggestionsIsVisable() {
@@ -151,13 +150,10 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	private void updateSuggestions(String word) {
 		suggestions.clear();
 		Executor exe = Executor.getInstance();
-		System.out.println("word: " + word);
 		Command[] cmds = exe.getCommands(word);
 		for (Command com : cmds) {
 			suggestions.add(new Suggestion(com.getFullName()));
-			System.out.println("cmd: " + com.getFullName());
 		}
-		System.out.println("--------");
 
 	}
 
@@ -169,7 +165,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	public String getCurrentlyTypedWord() {
 		if (caretDot <= 0)
 			return "";
-		return codeArea.getText().substring(getWordBegin(), getWordEnd());
+		return codeArea.getText().substring(getWordBegin(), getWordEnd()).trim();
 	}
 
 	/**
@@ -198,9 +194,6 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	public int getWordEnd() {
 		return caretDot;
 	}
-
-	// CLASSES
-	// .............................................
 
 	// LISTENERS
 	// .............................................
@@ -238,6 +231,9 @@ public class CodePane extends JScrollPane implements DocumentListener,
 			caretPos = temp;
 		SwingUtilities.invokeLater(onTextChange);
 	}
+
+	// CLASSES
+	// .............................................
 
 	private class Suggestion extends JLabel {
 

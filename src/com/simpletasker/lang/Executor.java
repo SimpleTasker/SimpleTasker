@@ -21,6 +21,7 @@ public class Executor {
     private static Executor theExecutor = new Executor();
 
     private Executor() {
+    	init();
     }
 
     public static Executor getInstance() {
