@@ -57,6 +57,10 @@ public class TaskInfo {
         return enabled;
     }
 
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public boolean runAt(int day,int hour,int minute) {
         if(days[day] && hours[hour] && minutes[minute]) {
             return true;

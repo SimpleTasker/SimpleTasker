@@ -1,6 +1,7 @@
 package com.simpletasker.tasker;
 
 import com.simpletasker.common.util.FileUtilities;
+import com.simpletasker.lang.Executor;
 
 import java.awt.AWTException;
 import java.awt.Image;
@@ -20,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by David on 13-8-2014.
+ * SimpleTasker project
  */
 public class SimpleTasker implements Runnable {
     private static SimpleTasker ourInstance = new SimpleTasker();
@@ -27,7 +29,6 @@ public class SimpleTasker implements Runnable {
             Executors.newScheduledThreadPool(1);
     private ScheduledFuture<?> scheduledFuture;
     private List<TaskInfo> tasks = new ArrayList<>();
-    private boolean initDone = false;
     private TrayIcon trayTasker;
 
     private Image noText;
@@ -36,14 +37,13 @@ public class SimpleTasker implements Runnable {
     private Image textGreen;
     private Image textRed;
     private Image textWarning;
+    private boolean error;
 
     private SimpleTasker() {
+        init();
     }
 
     public static SimpleTasker getInstance() {
-        if(!ourInstance.initDone) {
-            ourInstance.init();
-        }
         return ourInstance;
     }
 
@@ -52,7 +52,6 @@ public class SimpleTasker implements Runnable {
     }
 
     public void init() {
-        initDone = true;
         if(scheduledFuture==null){
             scheduledFuture = scheduler.scheduleAtFixedRate(getInstance(), 0, 1, TimeUnit.MINUTES);
         }
@@ -84,7 +83,9 @@ public class SimpleTasker implements Runnable {
             disableItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
+                    for(TaskInfo ti:tasks) {
+                        ti.setEnabled(false);
+                    }
                 }
             });
             popupMenu.add(disableItem);
@@ -93,7 +94,9 @@ public class SimpleTasker implements Runnable {
             enableItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
+                    for(TaskInfo ti:tasks) {
+                        ti.setEnabled(true);
+                    }
                 }
             });
             popupMenu.add(enableItem);
@@ -134,8 +137,17 @@ public class SimpleTasker implements Runnable {
                 }
             }
         }
+        error = Executor.getInstance().hasError();
+
         if(trayTasker!=null) {
             trayTasker.setImage(text);
+            if(error) {
+                if(tasks.isEmpty()) {
+                    trayTasker.setImage(noTextWarning);
+                } else {
+                    trayTasker.setImage(textWarning);
+                }
+            }
         }
     }
 

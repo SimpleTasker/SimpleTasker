@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by David on 9-8-2014.
+ * SimpleTasker project
  */
 public abstract class Command implements Comparable<Command>{
 
@@ -21,12 +22,12 @@ public abstract class Command implements Comparable<Command>{
 
 
     public Command(String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
         parent = null;
     }
 
     public Command(Command parent,String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
         parent.addChildren(this);
         this.parent = parent;
     }
@@ -43,7 +44,7 @@ public abstract class Command implements Comparable<Command>{
         if(parent==null) {
             return name();
         }
-        return parent.getFullName() + "." + name();
+        return parent.getFullName() + separator + name();
     }
 
     /**

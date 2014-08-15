@@ -7,7 +7,6 @@ import com.simpletasker.lang.commands.DialogCommand;
 import com.simpletasker.lang.commands.MathCommand;
 import com.simpletasker.lang.commands.RunCommand;
 
-import javax.swing.JOptionPane;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,8 +18,11 @@ public class Executor {
     public static final String testArg = "-test";
     private static final List<Command> commands = new ArrayList<>();
     private static Executor theExecutor = new Executor();
+    private TaskException error = null;
+    private boolean hasError = false;
 
     private Executor() {
+        init();
     }
 
     public static Executor getInstance() {
@@ -108,7 +110,16 @@ public class Executor {
     }
 
     private void showError(TaskException e) {
-        JOptionPane.showMessageDialog(null,e.getMessage());
+        hasError = true;
+        this.error = e;
+    }
+
+    public boolean hasError() {
+        return hasError;
+    }
+
+    public TaskException getError() {
+        return error;
     }
 
     private void test(String nm) {
