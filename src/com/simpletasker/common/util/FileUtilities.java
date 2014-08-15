@@ -1,19 +1,18 @@
 package com.simpletasker.common.util;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
+import com.simpletasker.Lib;
 
+import javax.imageio.ImageIO;
+import java.awt.Image;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 
 /**
  * Created by David on 11-8-2014.
@@ -78,6 +77,26 @@ public class FileUtilities {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static Image loadImageFromFile(File f) {
+        try {
+            return ImageIO.read(f);
+        } catch (IOException e) {
+            System.out.println("Couldn't load image " + f.getPath());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Image loadImageFromResources(String nm) {
+        try {
+            return ImageIO.read(Lib.class.getResourceAsStream(nm));
+        } catch (IOException e) {
+            System.out.println("Couldn't load image from resources" + nm);
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
