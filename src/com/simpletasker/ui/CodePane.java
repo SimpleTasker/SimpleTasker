@@ -31,13 +31,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.KeyEventDispatcher;
 import java.awt.Point;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
-public class CodePane extends JScrollPane implements DocumentListener,
-		CaretListener {
+public class CodePane extends JScrollPane implements DocumentListener, CaretListener, FocusListener{
 
 	private static final long serialVersionUID = 3839348580827112332L;
 
@@ -60,10 +61,8 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	private static final int suggestionHeight = 30;
 
 	// borders for the SuggestionLabel
-	private final Border redBorder = BorderFactory.createLineBorder(Color.red,
-			1);
-	private final Border blackBorder = BorderFactory.createLineBorder(
-			UIManager.getColor("Panel.background"), 1);
+	private final Border redBorder = BorderFactory.createLineBorder(Color.red, 1);
+	private final Border blackBorder = BorderFactory.createLineBorder(UIManager.getColor("Panel.background"), 1);
 
 	/**
 	 * The sellected suggestion. If value is -1 than there is no suggestion
@@ -71,7 +70,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	 */
 	private int selectedSuggestion = 0;
 	private ArrayList<Suggestion> suggestions = new ArrayList<>();
-	
+
 	/**
 	 * Called when the user changes the content of the {@link #codeArea}
 	 */
@@ -84,6 +83,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		}
 	};
 
+	//called when the BUTTON_DOWN key is pressed
 	private KeyEventDispatcher onButtonDown = new KeyEventDispatcher() {
 		boolean b = false;
 
@@ -103,9 +103,10 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		}
 	};
 
+	//called when the BUTTON_UP key is pressed
 	private KeyEventDispatcher onButtonUp = new KeyEventDispatcher() {
 		boolean b = false;
-		
+
 		@Override
 		public boolean dispatchKeyEvent(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -121,45 +122,71 @@ public class CodePane extends JScrollPane implements DocumentListener,
 			return false;
 		}
 	};
-	
+
+	//called when the ENTER key is pressed.
 	private KeyEventDispatcher onButtonEnter = new KeyEventDispatcher() {
 		boolean b = false;
 
 		@Override
 		public boolean dispatchKeyEvent(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				if(!suggestionsIsVisable())
+				if (!suggestionsIsVisable())
 					return false;
 				b = !b;
 				if (b)
 					return true;
-				if(!suggestionsIsVisable())
+				if (!suggestionsIsVisable())
 					return false;
 				Suggestion selected = getSelectedSuggestion();
 				codeIsChaningText = true;
-				
+
 				String txt = codeArea.getText();
 				String before = "", after = "";
-				
-				try{
+
+				try {
 					before = txt.substring(0, getWordBegin());
-				}catch(Exception iliketrains){}
-				
-				try{
-					after = txt.substring(getWordEnd(), txt.length()-1);
-				}catch(Exception iliketrains){}
-				
+				} catch (Exception iliketrains) {
+				}
+
+				try {
+					after = txt.substring(getWordEnd(), txt.length() - 1);
+				} catch (Exception iliketrains) {
+				}
+
 				codeArea.setText(before + selected.getText() + after);
 				codeIsChaningText = false;
-				
+
 				removeDropdownMenu();
-				
+
 				return true;
 			}
 			return false;
 		}
 	};
+	
+	private KeyEventDispatcher onButtonEsc = new KeyEventDispatcher() {
+		
+		@Override
+		public boolean dispatchKeyEvent(KeyEvent e) {
+			if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+				removeDropdownMenu();
+			return false;
+		}
+	};
+	
+	private KeyEventDispatcher onButtonSpace = new KeyEventDispatcher() {
+		
+		@Override
+		public boolean dispatchKeyEvent(KeyEvent e) {
+			if(e.getKeyCode() == KeyEvent.VK_SPACE && e.isControlDown())
+				updateDropdownMenu();
+			return false;
+		}
+	};
 
+	/**
+	 * constructor
+	 */
 	public CodePane() {
 		lineNumbers = new JTextArea("1");
 		lineNumbers.setEditable(false);
@@ -167,6 +194,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 
 		codeArea = new JTextArea();
 		codeArea.setEditable(true);
+		codeArea.addFocusListener(this);
 		setViewportView(codeArea);
 
 		codeArea.getDocument().addDocumentListener(this);
@@ -176,8 +204,10 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		suggestionsFrame.setVisible(false);
 		suggestionsFrame.setAlwaysOnTop(true);
 		suggestionsFrame.setContentPane(suggestionsPanel);
+		suggestionsFrame.setFocusable(false);
 
 		suggestionsPanel.setLayout(new GridBagLayout());
+		suggestionsPanel.setFocusable(false);
 
 		DefaultKeyboardFocusManager.getCurrentKeyboardFocusManager()
 				.addKeyEventDispatcher(onButtonDown);
@@ -185,6 +215,10 @@ public class CodePane extends JScrollPane implements DocumentListener,
 				.addKeyEventDispatcher(onButtonUp);
 		DefaultKeyboardFocusManager.getCurrentKeyboardFocusManager()
 				.addKeyEventDispatcher(onButtonEnter);
+		DefaultKeyboardFocusManager.getCurrentKeyboardFocusManager()
+				.addKeyEventDispatcher(onButtonEsc);
+		DefaultKeyboardFocusManager.getCurrentKeyboardFocusManager()
+				.addKeyEventDispatcher(onButtonSpace);
 	}
 
 	/**
@@ -209,7 +243,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		}
 		boolean sizeChanged = suggestions.size() != sizeBefore;
 		if (suggestionsIsVisable() && !sizeChanged) {
-			//updateSelected();
+			// updateSelected();
 		} else {
 			suggestionsPanel.removeAll();
 			int y = 0;
@@ -222,13 +256,22 @@ public class CodePane extends JScrollPane implements DocumentListener,
 			}
 			suggestionsFrame.setVisible(true);
 			suggestionsFrame.pack();
+			suggestionsFrame.setLocation(
+					caretPos.x + codeArea.getLocationOnScreen().x, caretPos.y
+							+ codeArea.getLocationOnScreen().y + 20);
 		}
 		updateSelected();
 	}
 
+	/**
+	 * updates the {@link #suggestions} array values according to
+	 * the {@link #selectedSuggestion} variable. It colors the selected
+	 * value and resets the colors on the Suggestions that are not selected
+	 * any more.
+	 */
 	private void updateSelected() {
-		if(selectedSuggestion > suggestions.size()-1)
-			selectedSuggestion = suggestions.size()-1;
+		if (selectedSuggestion > suggestions.size() - 1)
+			selectedSuggestion = suggestions.size() - 1;
 		int i = 0;
 		for (Suggestion s : suggestions) {
 			if (i == selectedSuggestion)
@@ -241,17 +284,31 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		suggestionsFrame.pack();
 	}
 
+	/**
+	 * @return whether or not the {@link #suggestionsFrame} is visable.
+	 */
 	private boolean suggestionsIsVisable() {
 		return suggestionsFrame.isVisible();
 	}
-	
-	private Suggestion getSelectedSuggestion(){
-		for(Suggestion s : suggestions)
-			if(s.isSelected)
+
+	/**
+	 * finds the selected Suggestion. If the {@link #suggestionsFrame} is not
+	 * visable, it will return null.
+	 * 
+	 * @return the selected Suggestion. null if there is none selected.
+	 */
+	private Suggestion getSelectedSuggestion() {
+		if (!suggestionsIsVisable())
+			return null;
+		for (Suggestion s : suggestions)
+			if (s.isSelected)
 				return s;
 		return null;
 	}
-	
+
+	/**
+	 * removes the dropdown menu from the screen.
+	 */
 	private void removeDropdownMenu() {
 		suggestions.clear();
 		suggestionsPanel.removeAll();
@@ -259,6 +316,12 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		selectedSuggestion = 0;
 	}
 
+	/**
+	 * updates the {@link #suggestions} array according to the specified word.
+	 * 
+	 * @param word
+	 *            the specified word.
+	 */
 	private void updateSuggestions(String word) {
 		suggestions.clear();
 		Executor exe = Executor.getInstance();
@@ -320,8 +383,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		Point temp = codeArea.getCaret().getMagicCaretPosition();
 		if (temp == null || codeIsChaningText)
 			return;
-		if (!suggestionsIsVisable())
-			caretPos = temp;
+		caretPos = temp;
 		SwingUtilities.invokeLater(onTextChange);
 	}
 
@@ -330,8 +392,8 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		Point temp = codeArea.getCaret().getMagicCaretPosition();
 		if (temp == null || codeIsChaningText)
 			return;
-		if (!suggestionsIsVisable())
-			caretPos = temp;
+		caretPos = temp;
+
 		SwingUtilities.invokeLater(onTextChange);
 	}
 
@@ -340,11 +402,21 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		Point temp = codeArea.getCaret().getMagicCaretPosition();
 		if (temp == null || codeIsChaningText)
 			return;
-		if (!suggestionsIsVisable())
-			caretPos = temp;
+		caretPos = temp;
+
 		SwingUtilities.invokeLater(onTextChange);
 	}
+	
+	@Override
+	public void focusGained(FocusEvent e) {
+		
+	}
 
+	@Override
+	public void focusLost(FocusEvent e) {
+		removeDropdownMenu();
+	}
+	
 	// CLASSES
 	// .............................................
 
@@ -355,6 +427,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 		public Suggestion(String name) {
 			super(name);
 			setBorder(blackBorder);
+			setFocusable(false);
 		}
 
 		private boolean isSelected = false;
