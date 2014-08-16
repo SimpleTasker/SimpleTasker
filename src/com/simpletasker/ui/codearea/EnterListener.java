@@ -3,7 +3,7 @@ package com.simpletasker.ui.codearea;
 import java.awt.event.KeyEvent;
 
 import com.simpletasker.ui.CodePane;
-import com.simpletasker.ui.CodePane.Suggestion;
+import com.simpletasker.ui.SuggestionsLabel;
 
 /**
  * @author Sinius15
@@ -18,10 +18,10 @@ public class EnterListener extends CodeAreaListener {
 	public boolean onAction() {
 		if (!parent.suggestionsIsVisable())
 			return false;
-		Suggestion selected = parent.getSelectedSuggestion();
+		SuggestionsLabel selected = parent.getSelectedSuggestion();
 		parent.setCodeChaningText(true);
 
-		String txt = parent.codeArea.getText();
+		String txt = parent.getCodeArea().getText();
 		String before = "", after = "";
 
 		try {
@@ -33,7 +33,7 @@ public class EnterListener extends CodeAreaListener {
 		} catch (Exception iliketrains) {
 		}
 
-		parent.codeArea.setText(before + selected.getText() + after);
+		parent.getCodeArea().setText(before + selected.getText() + after);
 		parent.setCodeChaningText(false);
 
 		parent.removeDropdownMenu();
