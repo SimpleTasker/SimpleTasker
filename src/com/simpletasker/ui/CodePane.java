@@ -45,13 +45,8 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 	private int caretDot = 0;
 	private Point caretPos;
 	private boolean codeIsChaningText = false;
-
-	/**
-	 * The sellected suggestion. If value is -1 than there is no suggestion
-	 * selected.
-	 */
-	public int selectedSuggestion = 0;
-	public ArrayList<SuggestionsLabel> suggestions = new ArrayList<>();
+	private int selectedSuggestion = 0;
+	private ArrayList<SuggestionsLabel> suggestions = new ArrayList<>();
 
 	/**
 	 * Called when the user changes the content of the {@link #codeArea}
@@ -77,6 +72,7 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 		
 		getCodeArea().setEditable(true);
 		getCodeArea().addFocusListener(this);
+		addFocusListener(this);
 		setViewportView(getCodeArea());
 
 		getCodeArea().getDocument().addDocumentListener(this);
@@ -179,7 +175,7 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 	 * 
 	 * @return the selected Suggestion. null if there is none selected.
 	 */
-	public SuggestionsLabel getSelectedSuggestion() {
+	public SuggestionsLabel getSelectedSuggestionLabel() {
 		if (!suggestionsIsVisable())
 			return null;
 		for (SuggestionsLabel s : suggestions)
@@ -344,7 +340,33 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 		return caretPos;
 	}
 	
+	/**
+	 * @return the CodeArea.
+	 */
 	public JTextArea getCodeArea(){
 		return codeArea;
+	}
+	
+	/**
+	 * This value can never be bigger than the size of {@link #getSuggestions()}
+	 * @return the selected suggestion value. If value is -1 than nothing is selected.
+	 */
+	public int getSelectedSuggestion() {
+		return selectedSuggestion;
+	}
+	
+	/**
+	 * This value can never be bigger than the size of {@link #getSuggestions()}
+	 * @param the selected suggestion value.
+	 */
+	public void setSelectedSuggestion(int selectedSuggestion) {
+		this.selectedSuggestion = selectedSuggestion;
+	}
+	
+	/**
+	 * @return the array where all the {@link SuggestionsLabel}s are stored.
+	 */
+	public ArrayList<SuggestionsLabel> getSuggestions() {
+		return suggestions;
 	}
 }

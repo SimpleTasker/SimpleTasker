@@ -18,7 +18,7 @@ public class EnterListener extends CodeAreaListener {
 	public boolean onAction() {
 		if (!parent.suggestionsIsVisable())
 			return false;
-		SuggestionsLabel selected = parent.getSelectedSuggestion();
+		SuggestionsLabel selected = parent.getSelectedSuggestionLabel();
 		parent.setCodeChaningText(true);
 
 		String txt = parent.getCodeArea().getText();

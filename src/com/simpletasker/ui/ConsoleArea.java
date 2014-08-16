@@ -10,7 +10,6 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 /**
- * 
  * @author Sinius15
  */
 public class ConsoleArea extends JTextPane implements CaretListener {
