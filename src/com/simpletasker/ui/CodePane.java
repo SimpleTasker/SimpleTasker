@@ -27,10 +27,11 @@ import com.simpletasker.ui.codearea.DownListener;
 import com.simpletasker.ui.codearea.EnterListener;
 import com.simpletasker.ui.codearea.EscapeListener;
 import com.simpletasker.ui.codearea.SpaceListener;
+import com.simpletasker.ui.codearea.SuggestionsLabel;
 import com.simpletasker.ui.codearea.UpListener;
 
 /**
- * @author Sinius15
+ * Created by Sinius.
  */
 public class CodePane extends JScrollPane implements DocumentListener,
 		CaretListener, FocusListener {

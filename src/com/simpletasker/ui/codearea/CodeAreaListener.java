@@ -5,6 +5,9 @@ import java.awt.event.KeyEvent;
 
 import com.simpletasker.ui.CodePane;
 
+/**
+ * Created by Sinius.
+ */
 public abstract class CodeAreaListener implements KeyEventDispatcher {
 
 	private int keyCode;

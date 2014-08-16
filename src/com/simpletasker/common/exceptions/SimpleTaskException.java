@@ -5,7 +5,9 @@ package com.simpletasker.common.exceptions;
  */
 public class SimpleTaskException extends Exception{
 
-    public SimpleTaskException() {
+	private static final long serialVersionUID = 1770398066112854944L;
+
+	public SimpleTaskException() {
         super();
     }
 

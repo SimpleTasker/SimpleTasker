@@ -5,7 +5,9 @@ package com.simpletasker.common.exceptions;
  */
 public class WrongTypeException extends SimpleTaskException {
 
-    public WrongTypeException() {
+	private static final long serialVersionUID = -3988318137065325280L;
+
+	public WrongTypeException() {
         super();
     }
 

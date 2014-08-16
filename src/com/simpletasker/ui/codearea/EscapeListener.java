@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import com.simpletasker.ui.CodePane;
 
 /**
- * @author Sinius15
+ * Created by Sinius.
  */
 public class EscapeListener extends CodeAreaListener {
 

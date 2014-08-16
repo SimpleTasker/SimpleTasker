@@ -13,11 +13,13 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 
+/**
+ * Created by Sinius.
+ */
 public class EditorFrame extends JFrame {
 
 	private static final long serialVersionUID = 4513395576031795608L;
 	private JPanel contentPane;
-	private CodePane codeArea;
 	private ConsoleArea consoleArea;
 
 	public EditorFrame() {
@@ -61,13 +63,9 @@ public class EditorFrame extends JFrame {
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		splitPane.setLeftComponent(tabbedPane);
-
-		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("New tab", null, panel_1, null);
-		panel_1.setLayout(new BorderLayout(0, 0));
-
-		codeArea = new CodePane();
-		panel_1.add(codeArea);
+		
+		CodePane codePane = new CodePane();
+		tabbedPane.addTab("New tab", null, codePane, null);
 
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("+", null, panel, null);

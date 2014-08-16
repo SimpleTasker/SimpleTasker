@@ -2,6 +2,9 @@ package com.simpletasker.ui;
 
 import java.awt.Color;
 
+/**
+ * Created by Sinius.
+ */
 public class GuiTester {
 
 	EditorFrame frame;

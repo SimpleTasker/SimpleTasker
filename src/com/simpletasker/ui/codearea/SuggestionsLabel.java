@@ -1,4 +1,4 @@
-package com.simpletasker.ui;
+package com.simpletasker.ui.codearea;
 
 import java.awt.Color;
 
@@ -7,6 +7,9 @@ import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+/**
+ * Created by Sinius.
+ */
 public class SuggestionsLabel extends JLabel {
 
 	private static final long serialVersionUID = 3273864444932843439L;

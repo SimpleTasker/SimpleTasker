@@ -5,7 +5,9 @@ package com.simpletasker.common.exceptions;
  */
 public class TaskException extends SimpleTaskException{
 
-    public static final String atLine = " at line ";
+	private static final long serialVersionUID = -2198019733905049170L;
+	
+	public static final String atLine = " at line ";
 
     public TaskException() {
         super();

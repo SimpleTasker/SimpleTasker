@@ -3,10 +3,9 @@ package com.simpletasker.ui.codearea;
 import java.awt.event.KeyEvent;
 
 import com.simpletasker.ui.CodePane;
-import com.simpletasker.ui.SuggestionsLabel;
 
 /**
- * @author Sinius15
+ * Created by Sinius.
  */
 public class EnterListener extends CodeAreaListener {
 
