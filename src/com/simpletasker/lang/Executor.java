@@ -43,7 +43,7 @@ public class Executor {
     }
 
     public static void main(String[] args) {
-        Executor.getInstance().test("math.");
+        Executor.getInstance().test("Math.");
         Executor.getInstance().test("math.abs");
         Executor.getInstance().test("math.abs.");
         for(int i = 0; i < args.length; i++) {
@@ -54,6 +54,7 @@ public class Executor {
                 rawRun(FileUtilities.getStringfromFile(new File("test.stsk")));
             }
         }
+
     }
 
     /**

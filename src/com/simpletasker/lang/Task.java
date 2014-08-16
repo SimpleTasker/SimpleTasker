@@ -50,7 +50,7 @@ public class Task {
     }
 
     public File getLocation() {
-        return location==null ? new File(""):location;
+        return (location == null) ? new File(".").getParentFile() : location;
     }
 
     public void setLocation(File location) {
