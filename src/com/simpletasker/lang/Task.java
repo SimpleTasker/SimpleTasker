@@ -1,7 +1,9 @@
 package com.simpletasker.lang;
 
+import com.simpletasker.common.exceptions.SimpleTaskException;
 import com.simpletasker.common.exceptions.TaskException;
 import com.simpletasker.lang.commands.Command;
+import com.simpletasker.lang.variables.Variable;
 
 import java.io.File;
 
@@ -17,22 +19,31 @@ public class Task {
         this.task = task;
     }
 
-    public void run() throws TaskException {
+    public void run() throws SimpleTaskException {
         String[] lines = task.split("\\r?\\n|\\r");
         int line = 0;
+        System.out.println("Found " + lines.length + " lines");
         for(String s:lines) {
             String[] operations = s.split(";");
             for(String current:operations) {
+                System.out.println("Operation::" + current);
                 String nm = current.substring(0,current.indexOf("("));
                 Command[] commandsFound = Executor.getInstance().getCommands(nm);
                 if(commandsFound.length != 1) {
                     throw new TaskException("Amount of commands found too large, Name=" + nm +", commands found=" + commandsFound.length,line);
                 }
                 Command command = commandsFound[0];
-                String[] params = (current.substring(current.indexOf("("),current.lastIndexOf(")"))).split(",");
-                if(params.length < command.getNumParam()) {
-                    throw new TaskException("Too little parameters given, needed at least "+ command.getNumParam() + " got " + params.length,line);
+                System.out.println(command.getFullName());
+                String[] paramsStr = (current.substring(current.indexOf("(") + 1,current.lastIndexOf(")"))).split(",");
+                if(paramsStr.length < command.getNumParam()) {
+                    throw new TaskException("Too little parameters given, needed at least "+ command.getNumParam() + " got " + paramsStr.length,line);
                 }
+                Variable[] params = new Variable[paramsStr.length];
+                for(int i = 0; i < params.length; i++) {
+                    params[i] = Variable.getVariableFromString(paramsStr[i]);
+                    System.out.println(params[i].toString());
+                }
+                command.onCalled(params,this);
             }
             line++;
         }

@@ -1,6 +1,6 @@
 package com.simpletasker.lang;
 
-import com.simpletasker.common.exceptions.TaskException;
+import com.simpletasker.common.exceptions.SimpleTaskException;
 import com.simpletasker.common.util.FileUtilities;
 import com.simpletasker.lang.commands.Command;
 import com.simpletasker.lang.commands.DialogCommand;
@@ -18,7 +18,7 @@ public class Executor {
     public static final String testArg = "-test";
     private static final List<Command> commands = new ArrayList<>();
     private static Executor theExecutor = new Executor();
-    private TaskException error = null;
+    private SimpleTaskException error = null;
     private boolean hasError = false;
 
     private Executor() {
@@ -35,7 +35,7 @@ public class Executor {
             public void run() {
                 try {
                     new Task(task).run();
-                } catch (TaskException e) {
+                } catch (SimpleTaskException e) {
                     e.printStackTrace();
                 }
             }
@@ -43,14 +43,14 @@ public class Executor {
     }
 
     public static void main(String[] args) {
-        new Executor().init();
         Executor.getInstance().test("math.");
-        Executor.getInstance().test("d");
-        Executor.getInstance().test("r");
+        Executor.getInstance().test("math.abs");
+        Executor.getInstance().test("math.abs.");
         for(int i = 0; i < args.length; i++) {
             if(args[i].equals(rawArg)&&i<args.length-1) {
                 rawRun(args[i+1]);
             } else if(args[i].equals(testArg)) {
+                System.out.println("Running test file");
                 rawRun(FileUtilities.getStringfromFile(new File("test.stsk")));
             }
         }
@@ -73,7 +73,7 @@ public class Executor {
                 found.add(c);
                 continue;
             }
-            if(pre.startsWith(c.name() + '.')) {
+            if(pre.equalsIgnoreCase(c.name() + '.')) {
                 for(Command cChill:c.getChildren()) {
                     if(cChill.name().startsWith(last)) {
                         found.add(cChill);
@@ -101,7 +101,7 @@ public class Executor {
             public void run() {
                 try {
                     task.run();
-                } catch (TaskException e) {
+                } catch (SimpleTaskException e) {
                     showError(e);
                     e.printStackTrace();
                 }
@@ -109,7 +109,7 @@ public class Executor {
         }).start();
     }
 
-    private void showError(TaskException e) {
+    private void showError(SimpleTaskException e) {
         hasError = true;
         this.error = e;
     }
@@ -118,7 +118,7 @@ public class Executor {
         return hasError;
     }
 
-    public TaskException getError() {
+    public SimpleTaskException getError() {
         return error;
     }
 

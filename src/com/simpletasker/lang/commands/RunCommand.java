@@ -29,10 +29,11 @@ public class RunCommand extends Command{
         File selectedFile;
         if(s.startsWith("~")) {
             File dir = task.getLocation();
-            selectedFile = new File(dir,s.substring(s.indexOf("~")));
+            selectedFile = new File(dir,s.substring(s.indexOf("~") + 1));
         } else {
             selectedFile = new File(s);
         }
+        System.out.println("File loc:" + selectedFile.getAbsolutePath());
         try {
             Desktop.getDesktop().open(selectedFile);
         } catch (IOException e) {

@@ -39,9 +39,10 @@ public class Variable {
     }
 
     public static Variable getVariableFromString(String in) {
+        System.out.println("In=" + in);
         String var = in.replaceAll("\\s","");
         if(var.startsWith("\"") && var.endsWith("\"")){
-            return new StringVariable(var.substring(1,var.length()-2));
+            return new StringVariable(var.substring(1,var.length()-1));
         }
         if(var.equalsIgnoreCase("true") || var.equalsIgnoreCase("false")) {
             return new BooleanVariable(var);
