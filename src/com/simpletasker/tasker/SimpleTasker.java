@@ -51,9 +51,9 @@ public class SimpleTasker implements Runnable {
         SimpleTasker.getInstance();
     }
 
-    public void init() {
+    private void init() {
         if(scheduledFuture==null){
-            scheduledFuture = scheduler.scheduleAtFixedRate(getInstance(), 0, 1, TimeUnit.MINUTES);
+            scheduledFuture = scheduler.scheduleAtFixedRate(this, 0, 1, TimeUnit.MINUTES);
         }
 
         String baseFolder = "res/icons/";
@@ -152,11 +152,12 @@ public class SimpleTasker implements Runnable {
     }
 
     public void exit() {
-        scheduledFuture.cancel(false);
+        scheduledFuture.cancel(true);
         if(SystemTray.isSupported() && trayTasker!=null) {
             SystemTray systemTray = SystemTray.getSystemTray();
             systemTray.remove(trayTasker);
         }
+        System.exit(0);
     }
 
 
