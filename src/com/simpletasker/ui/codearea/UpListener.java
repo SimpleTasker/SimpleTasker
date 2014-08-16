@@ -15,10 +15,10 @@ public class UpListener extends CodeAreaListener {
 
 	@Override
 	public boolean onAction() {
-		
-		parent.setSelectedSuggestion(parent.getSelectedSuggestion()-1);
+
+		parent.setSelectedSuggestion(parent.getSelectedSuggestion() - 1);
 		if (parent.getSelectedSuggestion() < 0)
-			parent.setSelectedSuggestion(parent.getSuggestions().size()-1);
+			parent.setSelectedSuggestion(parent.getSuggestions().size() - 1);
 		parent.updateSelected();
 		return true;
 	}

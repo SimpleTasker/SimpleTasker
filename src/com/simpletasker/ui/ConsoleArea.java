@@ -24,7 +24,7 @@ public class ConsoleArea extends JTextPane implements CaretListener {
 		addCaretListener(this);
 
 	}
-	
+
 	/**
 	 * Counts the amount of lines in this are.
 	 * 
@@ -91,7 +91,6 @@ public class ConsoleArea extends JTextPane implements CaretListener {
 			e.printStackTrace();
 		}
 	}
-
 
 	/**
 	 * use {@link #println(String, Color)} and {@link #clearConsole()} for

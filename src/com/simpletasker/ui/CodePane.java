@@ -32,7 +32,8 @@ import com.simpletasker.ui.codearea.UpListener;
 /**
  * @author Sinius15
  */
-public class CodePane extends JScrollPane implements DocumentListener, CaretListener, FocusListener{
+public class CodePane extends JScrollPane implements DocumentListener,
+		CaretListener, FocusListener {
 
 	private static final long serialVersionUID = 3839348580827112332L;
 
@@ -69,7 +70,7 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 		lineNumbers.setEditable(false);
 		lineNumbers.setBackground(UIManager.getColor("Panel.background"));
 		setRowHeaderView(lineNumbers);
-		
+
 		getCodeArea().setEditable(true);
 		getCodeArea().addFocusListener(this);
 		addFocusListener(this);
@@ -134,18 +135,17 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 			}
 			suggestionsFrame.setVisible(true);
 			suggestionsFrame.pack();
-			suggestionsFrame.setLocation(
-					getCaretPos().x + getCodeArea().getLocationOnScreen().x, getCaretPos().y
-							+ getCodeArea().getLocationOnScreen().y + 20);
+			suggestionsFrame.setLocation(getCaretPos().x
+					+ getCodeArea().getLocationOnScreen().x, getCaretPos().y
+					+ getCodeArea().getLocationOnScreen().y + 20);
 		}
 		updateSelected();
 	}
 
 	/**
-	 * updates the {@link #suggestions} array values according to
-	 * the {@link #selectedSuggestion} variable. It colors the selected
-	 * value and resets the colors on the Suggestions that are not selected
-	 * any more.
+	 * updates the {@link #suggestions} array values according to the
+	 * {@link #selectedSuggestion} variable. It colors the selected value and
+	 * resets the colors on the Suggestions that are not selected any more.
 	 */
 	public void updateSelected() {
 		if (selectedSuggestion > suggestions.size() - 1)
@@ -248,11 +248,11 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 	public int getWordEnd() {
 		return getCaretDot();
 	}
-	
+
 	/**
 	 * updates the line numbers.
 	 */
-	public void updateLineNumbers(){
+	public void updateLineNumbers() {
 		StringBuffer text = new StringBuffer("1" + System.lineSeparator());
 		int lines = getCodeArea().getText().split("\\r?\\n", -1).length;
 		for (int i = 2; i <= lines; i++) {
@@ -296,73 +296,78 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 
 		SwingUtilities.invokeLater(onTextChange);
 	}
-	
+
 	@Override
 	public void focusGained(FocusEvent e) {
-		
+
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
 		removeDropdownMenu();
 	}
-	
+
 	// GETTERS AND SETTERS
 	// .............................................
-	
+
 	/**
 	 * @return wether or not the code is chaning the text inside the codeArea.
 	 */
-	public boolean isCodeChaningText(){
+	public boolean isCodeChaningText() {
 		return codeIsChaningText;
 	}
-	
+
 	/**
-	 * @param b set if the code is chaning the text or not.
+	 * @param b
+	 *            set if the code is chaning the text or not.
 	 */
-	public void setCodeChaningText(boolean b){
+	public void setCodeChaningText(boolean b) {
 		codeIsChaningText = b;
 	}
-	
+
 	/**
-	 * @return the position of the caret. 
+	 * @return the position of the caret.
 	 * @see {@link Caret #getDot()}
 	 */
 	public int getCaretDot() {
 		return caretDot;
 	}
-	
+
 	/**
-	 * @return the visual position of the caret. 
+	 * @return the visual position of the caret.
 	 * @see {@link Caret #getMagicCaretPosition()}
 	 */
 	public Point getCaretPos() {
 		return caretPos;
 	}
-	
+
 	/**
 	 * @return the CodeArea.
 	 */
-	public JTextArea getCodeArea(){
+	public JTextArea getCodeArea() {
 		return codeArea;
 	}
-	
+
 	/**
 	 * This value can never be bigger than the size of {@link #getSuggestions()}
-	 * @return the selected suggestion value. If value is -1 than nothing is selected.
+	 * 
+	 * @return the selected suggestion value. If value is -1 than nothing is
+	 *         selected.
 	 */
 	public int getSelectedSuggestion() {
 		return selectedSuggestion;
 	}
-	
+
 	/**
 	 * This value can never be bigger than the size of {@link #getSuggestions()}
-	 * @param the selected suggestion value.
+	 * 
+	 * @param the
+	 *            selected suggestion value.
 	 */
 	public void setSelectedSuggestion(int selectedSuggestion) {
 		this.selectedSuggestion = selectedSuggestion;
 	}
-	
+
 	/**
 	 * @return the array where all the {@link SuggestionsLabel}s are stored.
 	 */

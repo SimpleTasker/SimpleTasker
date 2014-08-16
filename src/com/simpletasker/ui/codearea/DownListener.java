@@ -15,7 +15,7 @@ public class DownListener extends CodeAreaListener {
 
 	@Override
 	public boolean onAction() {
-		parent.setSelectedSuggestion(parent.getSelectedSuggestion()+1);
+		parent.setSelectedSuggestion(parent.getSelectedSuggestion() + 1);
 		if (parent.getSelectedSuggestion() >= parent.getSuggestions().size())
 			parent.setSelectedSuggestion(0);
 		parent.updateSelected();
