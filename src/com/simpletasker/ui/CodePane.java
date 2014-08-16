@@ -23,6 +23,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.Caret;
 
 import com.simpletasker.lang.Executor;
 import com.simpletasker.lang.commands.Command;
@@ -45,14 +46,9 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 	private JWindow suggestionsFrame;
 	private JPanel suggestionsPanel = new JPanel();
 
-	// the current caret position
 	private int caretDot = 0;
-
-	// the current magic carret position.
 	private Point caretPos;
-
-	// tells if the code/program is chaning the text in the codeArea JTextArea.
-	public boolean codeIsChaningText = false;
+	private boolean codeIsChaningText = false;
 	
 	// borders for the SuggestionLabel
 	private final Border redBorder = BorderFactory.createLineBorder(Color.red, 1);
@@ -71,10 +67,10 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 	private Runnable onTextChange = new Runnable() {
 		@Override
 		public void run() {
-			codeIsChaningText = true;
+			setCodeChaningText(true);
 			updateLineNumbers();
 			updateDropdownMenu();
-			codeIsChaningText = false;
+			setCodeChaningText(false);
 		}
 	};
 
@@ -152,7 +148,7 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 			suggestionsFrame.setVisible(true);
 			suggestionsFrame.pack();
 			suggestionsFrame.setLocation(
-					caretPos.x + codeArea.getLocationOnScreen().x, caretPos.y
+					getCaretPos().x + codeArea.getLocationOnScreen().x, getCaretPos().y
 							+ codeArea.getLocationOnScreen().y + 20);
 		}
 		updateSelected();
@@ -233,7 +229,7 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 	 * @return the word without spaces.
 	 */
 	public String getCurrentlyTypedWord() {
-		if (caretDot <= 0)
+		if (getCaretDot() <= 0)
 			return "";
 		return codeArea.getText().substring(getWordBegin(), getWordEnd())
 				.trim();
@@ -244,12 +240,12 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 	 * @return the beginning of the word.
 	 */
 	public int getWordBegin() {
-		int wordBegin = caretDot;
+		int wordBegin = getCaretDot();
 		String text = codeArea.getText();
 		while (true) {
 			if (wordBegin <= 0)
 				break;
-			String sub = text.substring(wordBegin, caretDot);
+			String sub = text.substring(wordBegin, getCaretDot());
 			if (Pattern.compile("\\s").matcher(sub).find()) {
 				wordBegin++;
 				break;
@@ -263,7 +259,7 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 	 * @return the end of the word.
 	 */
 	public int getWordEnd() {
-		return caretDot;
+		return getCaretDot();
 	}
 	
 	/**
@@ -288,7 +284,7 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		Point temp = codeArea.getCaret().getMagicCaretPosition();
-		if (temp == null || codeIsChaningText)
+		if (temp == null || isCodeChaningText())
 			return;
 		caretPos = temp;
 		SwingUtilities.invokeLater(onTextChange);
@@ -297,7 +293,7 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 	@Override
 	public void removeUpdate(DocumentEvent e) {
 		Point temp = codeArea.getCaret().getMagicCaretPosition();
-		if (temp == null || codeIsChaningText)
+		if (temp == null || isCodeChaningText())
 			return;
 		caretPos = temp;
 
@@ -307,7 +303,7 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 	@Override
 	public void changedUpdate(DocumentEvent e) {
 		Point temp = codeArea.getCaret().getMagicCaretPosition();
-		if (temp == null || codeIsChaningText)
+		if (temp == null || isCodeChaningText())
 			return;
 		caretPos = temp;
 
@@ -356,5 +352,38 @@ public class CodePane extends JScrollPane implements DocumentListener, CaretList
 			return "[" + getText() + "]";
 		}
 
+	}
+	
+	// GETTERS AND SETTERS
+	// .............................................
+	
+	/**
+	 * @return wether or not the code is chaning the text inside the codeArea.
+	 */
+	public boolean isCodeChaningText(){
+		return codeIsChaningText;
+	}
+	
+	/**
+	 * @param b set if the code is chaning the text or not.
+	 */
+	public void setCodeChaningText(boolean b){
+		codeIsChaningText = b;
+	}
+	
+	/**
+	 * @return the position of the caret. 
+	 * @see {@link Caret #getDot()}
+	 */
+	public int getCaretDot() {
+		return caretDot;
+	}
+	
+	/**
+	 * @return the visual position of the caret. 
+	 * @see {@link Caret #getMagicCaretPosition()}
+	 */
+	public Point getCaretPos() {
+		return caretPos;
 	}
 }

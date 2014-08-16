@@ -19,7 +19,7 @@ public class EnterListener extends CodeAreaListener {
 		if (!parent.suggestionsIsVisable())
 			return false;
 		Suggestion selected = parent.getSelectedSuggestion();
-		parent.codeIsChaningText = true;
+		parent.setCodeChaningText(true);
 
 		String txt = parent.codeArea.getText();
 		String before = "", after = "";
@@ -34,7 +34,7 @@ public class EnterListener extends CodeAreaListener {
 		}
 
 		parent.codeArea.setText(before + selected.getText() + after);
-		parent.codeIsChaningText = false;
+		parent.setCodeChaningText(false);
 
 		parent.removeDropdownMenu();
 
