@@ -12,6 +12,9 @@ import java.io.File;
  */
 public class Task {
 
+    public static final String REGEX_BETWEENSTRING = "(?![^\\\"]*\\\")";
+    public static final String REGEX_BETWEENDIGIT = "(?![^\\d]*\\d)";
+
     private String task;
     private File location;
 
@@ -30,11 +33,11 @@ public class Task {
                 String nm = current.substring(0,current.indexOf("("));
                 Command[] commandsFound = Executor.getInstance().getCommands(nm);
                 if(commandsFound.length != 1) {
-                    throw new TaskException("Amount of commands found too large, Name=" + nm +", commands found=" + commandsFound.length,line);
+                    throw new TaskException("Amount of commands found not one, Name=" + nm +", commands found=" + commandsFound.length,line);
                 }
                 Command command = commandsFound[0];
                 System.out.println(command.getFullName());
-                String[] paramsStr = (current.substring(current.indexOf("(") + 1,current.lastIndexOf(")"))).split(",");
+                String[] paramsStr = (current.substring(current.indexOf("(") + 1,current.lastIndexOf(")"))).split(",");//[," + REGEX_BETWEENSTRING +"]|[," + REGEX_BETWEENDIGIT + "]");
                 if(paramsStr.length < command.getNumParam()) {
                     throw new TaskException("Too little parameters given, needed at least "+ command.getNumParam() + " got " + paramsStr.length,line);
                 }
