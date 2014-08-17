@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Created by Sinius.
@@ -21,7 +23,8 @@ public class EditorFrame extends JFrame {
 	private static final long serialVersionUID = 4513395576031795608L;
 	private JPanel contentPane;
 	private ConsoleArea consoleArea;
-
+	private JTabbedPane tabbedPane;
+	
 	public EditorFrame() {
 
 		setTitle("Simple Tasker Editor");
@@ -61,12 +64,13 @@ public class EditorFrame extends JFrame {
 		splitPane.setResizeWeight(0.8);
 		contentPane.add(splitPane, BorderLayout.CENTER);
 
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.addChangeListener(onTabSelect);
 		splitPane.setLeftComponent(tabbedPane);
-		
+
 		CodePane codePane = new CodePane();
 		tabbedPane.addTab("New tab", null, codePane, null);
-
+		
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("+", null, panel, null);
 
@@ -91,6 +95,29 @@ public class EditorFrame extends JFrame {
 		consoleArea = new ConsoleArea();
 		scrollPane.setViewportView(consoleArea);
 	}
+	
+	private ChangeListener onTabSelect = new ChangeListener() {
+		
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			JTabbedPane pane = (JTabbedPane) e.getSource();
+			int index = pane.getSelectedIndex();
+			if(pane.getTitleAt(index).equals("+")){
+				
+				pane.removeTabAt(index);
+				
+				CodePane codePane = new CodePane();
+				tabbedPane.addTab("New tab", codePane);
+				
+				CodePane plusTab = new CodePane();
+				tabbedPane.addTab("+", plusTab);
+				
+				tabbedPane.setSelectedComponent(codePane);
+				
+				return;
+			}
+		}
+	};
 
 	public ConsoleArea getConsoleArea() {
 		return consoleArea;
