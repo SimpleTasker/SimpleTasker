@@ -2,6 +2,7 @@ package com.simpletasker.tasker;
 
 import com.simpletasker.common.util.FileUtilities;
 import com.simpletasker.lang.Executor;
+import com.simpletasker.lang.Task;
 
 import java.awt.AWTException;
 import java.awt.Image;
@@ -11,6 +12,7 @@ import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -161,5 +163,12 @@ public class SimpleTasker implements Runnable {
     }
 
 
-
+    public void loadTaskFromFile(File f) {
+        File parent = f.getParentFile();
+        if(parent==null) {
+            parent = new File("");
+        }
+        String taskData = FileUtilities.getStringfromFile(f);
+        tasks.add(new TaskInfo(new Task(taskData),parent));
+    }
 }
