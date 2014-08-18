@@ -98,7 +98,6 @@ public class EditorFrame extends JFrame {
 	}
 	
 	private ChangeListener onTabSelect = new ChangeListener() {
-		boolean first = true;
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			JTabbedPane pane = (JTabbedPane) e.getSource();
