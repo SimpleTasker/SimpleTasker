@@ -50,7 +50,7 @@ public class SimpleTasker implements Runnable {
     }
 
     public static void main(String[] args) {
-        SimpleTasker.getInstance();
+        SimpleTasker.getInstance().loadTaskFromFile(new File("test.stsk"));
     }
 
     private void init() {
