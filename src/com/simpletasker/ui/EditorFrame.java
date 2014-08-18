@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -26,6 +27,8 @@ public class EditorFrame extends JFrame {
 	private JPanel contentPane;
 	private ConsoleArea consoleArea;
 	private JTabbedPane tabbedPane;
+	
+	private EditorFrame thiss = this;
 	
 	public EditorFrame() {
 
@@ -70,7 +73,7 @@ public class EditorFrame extends JFrame {
 		tabbedPane.addChangeListener(onTabSelect);
 		splitPane.setLeftComponent(tabbedPane);
 
-		tabbedPane.addTab("+", new JPanel());
+		tabbedPane.addTab(Lib.getLang("main.plus"), new JPanel());
 
 		JPanel panel_2 = new JPanel();
 		splitPane.setRightComponent(panel_2);
@@ -81,10 +84,10 @@ public class EditorFrame extends JFrame {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		panel_2.add(panel_3, BorderLayout.NORTH);
 
-		JButton btnRun = new JButton("Run");
+		JButton btnRun = new JButton(Lib.getLang("main.run"));
 		panel_3.add(btnRun);
 
-		JButton btnStop = new JButton("Stop");
+		JButton btnStop = new JButton(Lib.getLang("main.stop"));
 		panel_3.add(btnStop);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -95,20 +98,25 @@ public class EditorFrame extends JFrame {
 	}
 	
 	private ChangeListener onTabSelect = new ChangeListener() {
-		
+		boolean first = true;
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			JTabbedPane pane = (JTabbedPane) e.getSource();
 			int index = pane.getSelectedIndex();
-			if(pane.getTitleAt(index).equals("+")){
+			if(index == -1){
+				return;
+			}
+			if(pane.getTitleAt(index).equals(Lib.getLang("main.plus"))){
 				
 				pane.removeTabAt(index);
 				
+				String name = JOptionPane.showInputDialog(thiss, Lib.getLang("question.newFileName"), Lib.getLang("question.newFileNameTitle"), JOptionPane.QUESTION_MESSAGE);
+				
 				CodePane codePane = new CodePane();
-				tabbedPane.addTab("New tab", codePane);
+				tabbedPane.addTab(name, codePane);
 				
 				CodePane plusTab = new CodePane();
-				tabbedPane.addTab("+", plusTab);
+				tabbedPane.addTab(Lib.getLang("main.plus"), plusTab);
 				
 				tabbedPane.setSelectedComponent(codePane);
 				

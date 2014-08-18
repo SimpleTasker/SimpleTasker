@@ -22,12 +22,6 @@ public class GuiTester {
 			public void run() {
 				frame = new EditorFrame();
 				frame.setVisible(true);
-				
-				getConsole().println("green", Color.green);
-				getConsole().println("red", Color.red);
-				getConsole().println("black", Color.black);
-
-				System.out.println(getConsole().getInputLine());
 			}
 		});
 		

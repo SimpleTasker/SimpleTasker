@@ -19,3 +19,6 @@ file.close:Close
 
 help.about:About
 help.ceckVersion:Check Version
+
+question.newFileName:What would you like the name of your new file to be?
+question.newFileNameTitle:Name?
