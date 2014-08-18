@@ -15,6 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.simpletasker.Lib;
+
 /**
  * Created by Sinius.
  */
@@ -27,32 +29,32 @@ public class EditorFrame extends JFrame {
 	
 	public EditorFrame() {
 
-		setTitle("Simple Tasker Editor");
+		setTitle(Lib.getLang("main.title"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 730, 658);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		JMenu mnFile = new JMenu("File");
+		JMenu mnFile = new JMenu(Lib.getLang("main.file"));
 		menuBar.add(mnFile);
 
-		JMenuItem mntmSave = new JMenuItem("Save");
+		JMenuItem mntmSave = new JMenuItem(Lib.getLang("file.save"));
 		mnFile.add(mntmSave);
 
-		JMenuItem mntmSaveAs = new JMenuItem("Save As");
+		JMenuItem mntmSaveAs = new JMenuItem(Lib.getLang("file.saveas"));
 		mnFile.add(mntmSaveAs);
 
-		JMenuItem mntmLoad = new JMenuItem("Load");
+		JMenuItem mntmLoad = new JMenuItem(Lib.getLang("file.load"));
 		mnFile.add(mntmLoad);
 
-		JMenu mnSource = new JMenu("Source");
+		JMenu mnSource = new JMenu(Lib.getLang("main.source"));
 		menuBar.add(mnSource);
 
-		JMenu mnHelp = new JMenu("Help");
+		JMenu mnHelp = new JMenu(Lib.getLang("main.help"));
 		menuBar.add(mnHelp);
 
-		JMenuItem mntmAbout = new JMenuItem("About");
+		JMenuItem mntmAbout = new JMenuItem(Lib.getLang("help.about"));
 		mnHelp.add(mntmAbout);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
@@ -68,11 +70,7 @@ public class EditorFrame extends JFrame {
 		tabbedPane.addChangeListener(onTabSelect);
 		splitPane.setLeftComponent(tabbedPane);
 
-		CodePane codePane = new CodePane();
-		tabbedPane.addTab("New tab", null, codePane, null);
-		
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("+", null, panel, null);
+		tabbedPane.addTab("+", new JPanel());
 
 		JPanel panel_2 = new JPanel();
 		splitPane.setRightComponent(panel_2);
