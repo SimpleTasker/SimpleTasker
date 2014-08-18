@@ -37,7 +37,7 @@ public class Task {
                 }
                 Command command = commandsFound[0];
                 System.out.println(command.getFullName());
-                String[] paramsStr = (current.substring(current.indexOf("(") + 1,current.lastIndexOf(")"))).split(",");//[," + REGEX_BETWEENSTRING +"]|[," + REGEX_BETWEENDIGIT + "]");
+                String[] paramsStr = (current.substring(current.indexOf("(") + 1,current.lastIndexOf(")"))).split("," + REGEX_BETWEENSTRING);//|[," + REGEX_BETWEENDIGIT + "]");
                 if(paramsStr.length < command.getNumParam()) {
                     throw new TaskException("Too little parameters given, needed at least "+ command.getNumParam() + " got " + paramsStr.length,line);
                 }
