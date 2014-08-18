@@ -1,0 +1,21 @@
+################################
+#the englisch language.
+#The format is key:value. The key should not contain special characters expect from '.'.
+#all empty lines and lines starting with # are ignored.
+################################
+
+main.title:Simple Tasker Editor
+main.file:File
+main.source:Source
+main.help:Help
+main.plus:+
+main.run:Run
+main.stop:Stop
+
+file.save:Save
+file.saveas:Save As
+file.load:Load
+file.close:Close
+
+help.about:About
+help.ceckVersion:Check Version

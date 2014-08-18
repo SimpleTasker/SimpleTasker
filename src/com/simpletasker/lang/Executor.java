@@ -1,5 +1,10 @@
 package com.simpletasker.lang;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.simpletasker.common.exceptions.SimpleTaskException;
 import com.simpletasker.common.util.FileUtilities;
 import com.simpletasker.lang.commands.Command;
@@ -7,17 +12,12 @@ import com.simpletasker.lang.commands.DialogCommand;
 import com.simpletasker.lang.commands.MathCommand;
 import com.simpletasker.lang.commands.RunCommand;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Executor {
 
     public static final String rawArg = "-raw";
     public static final String testArg = "-test";
     private static final List<Command> commands = new ArrayList<>();
-    private static Executor theExecutor = new Executor();
+    private static Executor theExecutor;
     private SimpleTaskException error = null;
     private boolean hasError = false;
 
@@ -26,6 +26,8 @@ public class Executor {
     }
 
     public static Executor getInstance() {
+    	if(theExecutor == null)
+    		theExecutor = new Executor();
         return theExecutor;
     }
 
