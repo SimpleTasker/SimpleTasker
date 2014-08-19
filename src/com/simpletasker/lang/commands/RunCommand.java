@@ -33,7 +33,6 @@ public class RunCommand extends Command{
         } else {
             selectedFile = new File(s);
         }
-        System.out.println("File loc:" + selectedFile.getAbsolutePath());
         try {
             Desktop.getDesktop().open(selectedFile);
         } catch (IOException e) {
