@@ -21,6 +21,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Caret;
 
+import com.simpletasker.common.util.StringUtils;
 import com.simpletasker.lang.Executor;
 import com.simpletasker.lang.commands.Command;
 import com.simpletasker.ui.codearea.DownListener;
@@ -67,7 +68,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	 * constructor
 	 */
 	public CodePane() {
-		lineNumbers = new JTextArea("1");
+		lineNumbers = new JTextArea();
 		lineNumbers.setEditable(false);
 		lineNumbers.setBackground(UIManager.getColor("Panel.background"));
 		setRowHeaderView(lineNumbers);
@@ -99,6 +100,8 @@ public class CodePane extends JScrollPane implements DocumentListener,
 				.addKeyEventDispatcher(new EscapeListener(this));
 		DefaultKeyboardFocusManager.getCurrentKeyboardFocusManager()
 				.addKeyEventDispatcher(new SpaceListener(this));
+		
+		updateLineNumbers();
 	}
 
 	/**
@@ -254,10 +257,11 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	 * updates the line numbers.
 	 */
 	public void updateLineNumbers() {
-		StringBuffer text = new StringBuffer("1" + System.lineSeparator());
+		StringBuffer text = new StringBuffer("");
 		int lines = getCodeArea().getText().split("\\r?\\n", -1).length;
-		for (int i = 2; i <= lines; i++) {
-			text.append(i + "  " + System.lineSeparator());
+		for (int i = 1; i <= lines; i++) {
+			int spaces = 6 - Integer.toString(i).length()*2;
+			text.append(i + StringUtils.getSpace(spaces) + System.lineSeparator());
 		}
 		lineNumbers.setText(text.toString());
 	}

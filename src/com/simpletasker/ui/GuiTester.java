@@ -1,6 +1,5 @@
 package com.simpletasker.ui;
 
-import java.awt.Color;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
@@ -44,7 +43,7 @@ public class GuiTester {
 			e.printStackTrace();
 		}
 		
-		GuiTester manager = new GuiTester();
+		new GuiTester();
 
 	}
 

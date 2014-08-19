@@ -1,5 +1,5 @@
 ################################
-#the englisch language.
+#the english language.
 #The format is key:value. The key should not contain special characters expect from '.'.
 #all empty lines and lines starting with # are ignored.
 ################################

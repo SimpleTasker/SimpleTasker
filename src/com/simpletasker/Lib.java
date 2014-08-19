@@ -76,7 +76,9 @@ public class Lib {
 	 * @return a locilazed string. Returns null if no value is found.
 	 */
 	public static String getLang(String key){
-		return language.get(key);
+		if(language.containsKey(key))
+			return language.get(key);
+		return "~~";
 	}
 	
 }
