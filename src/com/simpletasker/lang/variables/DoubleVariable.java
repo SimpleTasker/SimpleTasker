@@ -1,5 +1,7 @@
 package com.simpletasker.lang.variables;
 
+import com.simpletasker.Lib;
+
 /**
  * Created by David on 11-8-2014.
  */
@@ -18,7 +20,7 @@ public class DoubleVariable extends Variable {
         try {
             return Double.parseDouble(value);
         } catch (NumberFormatException e) {
-            System.out.println("Could not parse number from:"+value);
+            System.out.println(Lib.getLang("doubleVar.error")+value);
         }
         return 0.0;
     }

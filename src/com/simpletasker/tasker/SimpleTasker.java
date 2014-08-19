@@ -1,5 +1,6 @@
 package com.simpletasker.tasker;
 
+import com.simpletasker.Lib;
 import com.simpletasker.common.util.FileUtilities;
 import com.simpletasker.lang.Executor;
 import com.simpletasker.lang.Task;
@@ -72,7 +73,7 @@ public class SimpleTasker implements Runnable {
             PopupMenu popupMenu = new PopupMenu();
             trayTasker = new TrayIcon(noText,"Simple Tasker",popupMenu);
             trayTasker.setImageAutoSize(true);
-            MenuItem openItem = new MenuItem("Open");
+            MenuItem openItem = new MenuItem(Lib.getLang("main.open"));
             openItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -81,7 +82,7 @@ public class SimpleTasker implements Runnable {
             });
             popupMenu.add(openItem);
 
-            MenuItem disableItem = new MenuItem("Disable all");
+            MenuItem disableItem = new MenuItem(Lib.getLang("main.disAll"));
             disableItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -92,7 +93,7 @@ public class SimpleTasker implements Runnable {
             });
             popupMenu.add(disableItem);
 
-            MenuItem enableItem = new MenuItem("Enable all");
+            MenuItem enableItem = new MenuItem(Lib.getLang("main.enbAll"));
             enableItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -103,7 +104,7 @@ public class SimpleTasker implements Runnable {
             });
             popupMenu.add(enableItem);
 
-            MenuItem exitItem = new MenuItem("Exit");
+            MenuItem exitItem = new MenuItem(Lib.getLang("main.exit"));
             exitItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {

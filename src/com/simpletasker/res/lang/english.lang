@@ -11,6 +11,10 @@ main.help:Help
 main.plus:+
 main.run:Run
 main.stop:Stop
+main.open:Open
+main.exit:Exit
+main.disAll:Disable all
+main.enbAll:Enable all
 
 file.save:Save
 file.saveas:Save As
@@ -22,3 +26,7 @@ help.ceckVersion:Check Version
 
 question.newFileName:What would you like the name of your new file to be?
 question.newFileNameTitle:Name?
+
+
+#lang
+doubleVar.error:Could not parse number from
