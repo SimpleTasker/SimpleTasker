@@ -70,11 +70,14 @@ public class EditorFrame extends JFrame {
 		contentPane.add(splitPane, BorderLayout.CENTER);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.addChangeListener(onTabSelect);
+		
 		splitPane.setLeftComponent(tabbedPane);
-
+		
+		tabbedPane.addTab(Lib.getLang("file.new"), new CodePane());
 		tabbedPane.addTab(Lib.getLang("main.plus"), new JPanel());
-
+		tabbedPane.setSelectedIndex(0);
+		tabbedPane.addChangeListener(onTabSelect);
+		
 		JPanel panel_2 = new JPanel();
 		splitPane.setRightComponent(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));

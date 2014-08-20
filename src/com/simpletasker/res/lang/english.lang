@@ -20,6 +20,7 @@ file.save:Save
 file.saveas:Save As
 file.load:Load
 file.close:Close
+file.new:New File
 
 help.about:About
 help.ceckVersion:Check Version
