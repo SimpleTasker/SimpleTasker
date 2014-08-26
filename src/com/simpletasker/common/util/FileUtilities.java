@@ -46,6 +46,32 @@ public class FileUtilities {
         return "";
     }
 
+    public static String getStringfromInputStream(InputStream in) {
+        try {
+            int byteAvailable = in.available();
+            byte[] data = new byte[byteAvailable];
+            int read = in.read(data);
+            if(read != byteAvailable) {
+                System.out.println(Lib.getLang("util.bytesNotEqual"));
+            }
+            String text = new String(data, charset);
+            text = text.replaceAll("\\r?\\n|\\r", "");
+            return text;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return "";
+    }
+
+
     public static boolean writeStringToFile(File f,String s) {
         OutputStream out = null;
         try {
