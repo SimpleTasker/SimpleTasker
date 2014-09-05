@@ -38,7 +38,7 @@ public class GuiTester {
 		try {
 			Lib.initLanguage("english");
 		} catch (IOException e) {
-			//this is the only hard coded string in the whole project.
+			//this is the only hard coded string in the whole project. cough cough
 			JOptionPane.showMessageDialog(null, "Could not load language file.", "Error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}

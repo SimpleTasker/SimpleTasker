@@ -14,6 +14,7 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -38,7 +39,7 @@ public class SimpleTasker implements Runnable {
     private Image noTextWarning;
     private Image text;
     private Image textGreen;
-    private Image textRed;
+	private Image textRed;
     private Image textWarning;
     private boolean error;
 
@@ -51,6 +52,11 @@ public class SimpleTasker implements Runnable {
     }
 
     public static void main(String[] args) {
+    	try {
+			Lib.initLanguage("english");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         SimpleTasker.getInstance().loadTaskFromFile(new File("test.stsk"));
     }
 
