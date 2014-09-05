@@ -28,6 +28,7 @@ help.ceckVersion:Check Version
 question.newFileName:What would you like the name of your new file to be?
 question.newFileNameTitle:Name?
 
+util.bytesNotEqual:Bytes available is not equal to bytes read
 
 #lang
 doubleVar.error:Could not parse number from
