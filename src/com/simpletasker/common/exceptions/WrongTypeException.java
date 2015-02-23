@@ -1,7 +1,7 @@
 package com.simpletasker.common.exceptions;
 
 /**
- * Created by David on 11-8-2014.
+ * Created on 11-8-2014.
  */
 public class WrongTypeException extends SimpleTaskException {
 

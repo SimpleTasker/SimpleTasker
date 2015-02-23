@@ -6,7 +6,7 @@ import com.simpletasker.lang.variables.DoubleVariable;
 import com.simpletasker.lang.variables.Variable;
 
 /**
- * Created by David on 12-8-2014.
+ * Created on 12-8-2014.
  */
 public class MathCommand extends Command {
 

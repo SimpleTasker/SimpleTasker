@@ -8,7 +8,7 @@ import com.simpletasker.lang.variables.Variable;
 import java.io.File;
 
 /**
- * Created by David on 10-8-2014.
+ * Created on 10-8-2014.
  */
 public class Task {
 

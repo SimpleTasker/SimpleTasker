@@ -5,7 +5,7 @@ import com.simpletasker.common.exceptions.WrongTypeException;
 import java.util.Date;
 
 /**
- * Created by David on 9-8-2014.
+ * Created on 9-8-2014.
  */
 public class Variable {
 

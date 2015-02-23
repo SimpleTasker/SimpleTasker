@@ -15,7 +15,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 
 /**
- * Created by David on 11-8-2014.
+ * Created on 11-8-2014.
  */
 public class FileUtilities {
 

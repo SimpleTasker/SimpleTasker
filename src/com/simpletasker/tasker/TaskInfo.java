@@ -6,7 +6,7 @@ import com.simpletasker.lang.Task;
 import java.io.File;
 
 /**
- * Created by David on 13-8-2014.
+ * Created on 13-8-2014.
  */
 public class TaskInfo {
 

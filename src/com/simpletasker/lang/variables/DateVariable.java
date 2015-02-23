@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by David on 11-8-2014.
+ * Created on 11-8-2014.
  */
 public class DateVariable extends Variable {
 

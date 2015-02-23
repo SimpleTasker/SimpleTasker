@@ -366,7 +366,7 @@ public class CodePane extends JScrollPane implements DocumentListener,
 	/**
 	 * This value can never be bigger than the size of {@link #getSuggestions()}
 	 * 
-	 * @param the
+	 * @param selectedSuggestion
 	 *            selected suggestion value.
 	 */
 	public void setSelectedSuggestion(int selectedSuggestion) {

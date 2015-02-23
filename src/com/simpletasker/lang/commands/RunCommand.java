@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by David on 11-8-2014.
+ * Created on 11-8-2014.
  */
 public class RunCommand extends Command{
 

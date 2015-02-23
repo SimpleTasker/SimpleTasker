@@ -8,7 +8,7 @@ import com.simpletasker.lang.variables.Variable;
 import javax.swing.JOptionPane;
 
 /**
- * Created by David on 12-8-2014.
+ * Created on 12-8-2014.
  */
 public class DialogCommand extends Command {
     public DialogCommand() {
