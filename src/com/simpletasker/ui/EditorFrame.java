@@ -28,7 +28,33 @@ public class EditorFrame extends JFrame {
 	private ConsoleArea consoleArea;
 	private JTabbedPane tabbedPane;
 	
-	private EditorFrame thiss = this;
+	private EditorFrame thiss = this; //what??
+	private ChangeListener onTabSelect = new ChangeListener() {
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			JTabbedPane pane = (JTabbedPane) e.getSource();
+			int index = pane.getSelectedIndex();
+			if(index == -1){
+				return;
+			}
+			if(pane.getTitleAt(index).equals(Lib.getLang("main.plus"))){
+
+				pane.removeTabAt(index);
+
+				String name = JOptionPane.showInputDialog(thiss, Lib.getLang("question.newFileName"), Lib.getLang("question.newFileNameTitle"), JOptionPane.QUESTION_MESSAGE);
+
+				CodePane codePane = new CodePane();
+				tabbedPane.addTab(name, codePane);
+
+				CodePane plusTab = new CodePane();
+				tabbedPane.addTab(Lib.getLang("main.plus"), plusTab);
+
+				tabbedPane.setSelectedComponent(codePane);
+
+				return;
+			}
+		}
+	};
 	
 	public EditorFrame() {
 
@@ -70,14 +96,14 @@ public class EditorFrame extends JFrame {
 		contentPane.add(splitPane, BorderLayout.CENTER);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		
+
 		splitPane.setLeftComponent(tabbedPane);
-		
+
 		tabbedPane.addTab(Lib.getLang("file.new"), new CodePane());
 		tabbedPane.addTab(Lib.getLang("main.plus"), new JPanel());
 		tabbedPane.setSelectedIndex(0);
 		tabbedPane.addChangeListener(onTabSelect);
-		
+
 		JPanel panel_2 = new JPanel();
 		splitPane.setRightComponent(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
@@ -99,33 +125,6 @@ public class EditorFrame extends JFrame {
 		consoleArea = new ConsoleArea();
 		scrollPane.setViewportView(consoleArea);
 	}
-	
-	private ChangeListener onTabSelect = new ChangeListener() {
-		@Override
-		public void stateChanged(ChangeEvent e) {
-			JTabbedPane pane = (JTabbedPane) e.getSource();
-			int index = pane.getSelectedIndex();
-			if(index == -1){
-				return;
-			}
-			if(pane.getTitleAt(index).equals(Lib.getLang("main.plus"))){
-				
-				pane.removeTabAt(index);
-				
-				String name = JOptionPane.showInputDialog(thiss, Lib.getLang("question.newFileName"), Lib.getLang("question.newFileNameTitle"), JOptionPane.QUESTION_MESSAGE);
-				
-				CodePane codePane = new CodePane();
-				tabbedPane.addTab(name, codePane);
-				
-				CodePane plusTab = new CodePane();
-				tabbedPane.addTab(Lib.getLang("main.plus"), plusTab);
-				
-				tabbedPane.setSelectedComponent(codePane);
-				
-				return;
-			}
-		}
-	};
 
 	public ConsoleArea getConsoleArea() {
 		return consoleArea;

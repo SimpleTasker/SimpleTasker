@@ -5,6 +5,7 @@ import com.simpletasker.common.util.FileUtilities;
 import com.simpletasker.lang.Executor;
 import com.simpletasker.lang.Task;
 
+import javax.swing.UIManager;
 import java.awt.AWTException;
 import java.awt.Image;
 import java.awt.MenuItem;
@@ -45,6 +46,13 @@ public class SimpleTasker implements Runnable {
 
     private SimpleTasker() {
         init();
+
+        //set default look and feel to system look and feel
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     public static SimpleTasker getInstance() {
