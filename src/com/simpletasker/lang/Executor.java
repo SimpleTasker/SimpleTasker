@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.simpletasker.common.exceptions.SimpleTaskException;
 import com.simpletasker.common.util.FileUtilities;
+import com.simpletasker.lang.commands.AlertCommand;
 import com.simpletasker.lang.commands.Command;
 import com.simpletasker.lang.commands.DialogCommand;
 import com.simpletasker.lang.commands.MathCommand;
@@ -86,7 +87,7 @@ public class Executor {
         }
         
         //always get a sorted array.
-        Command[] foundArr = found.toArray(new Command[0]);
+        Command[] foundArr = found.toArray(new Command[found.size()]);
         Arrays.sort(foundArr);
         return foundArr;
     }
@@ -95,6 +96,7 @@ public class Executor {
         commands.add(new RunCommand());
         commands.add(new MathCommand());
         commands.add(new DialogCommand());
+        commands.add(new AlertCommand());
     }
 
 

@@ -1,5 +1,6 @@
 package com.simpletasker.lang.variables;
 
+import com.simpletasker.common.exceptions.SimpleTaskException;
 import com.simpletasker.common.exceptions.WrongTypeException;
 
 import java.util.Date;
@@ -73,15 +74,15 @@ public class Variable {
         return ((StringVariable)castToSpecific(Variable.Type.STRING)).getActualValue();
     }
 
-    public boolean asBool() throws WrongTypeException {
+    public boolean asBool() throws SimpleTaskException {
         return ((BooleanVariable)castToSpecific(Variable.Type.BOOL)).getActualValue();
     }
 
-    public double asNumber() throws WrongTypeException {
+    public double asNumber() throws SimpleTaskException {
         return ((DoubleVariable)castToSpecific(Type.NUMBER)).getActualValue();
     }
 
-    public Date asDate() throws WrongTypeException {
+    public Date asDate() throws SimpleTaskException {
         return ((DateVariable)castToSpecific(Type.DATE)).getActualValue();
     }
 

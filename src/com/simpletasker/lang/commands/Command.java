@@ -11,7 +11,7 @@ import java.util.List;
  * Created by David on 9-8-2014.
  * SimpleTasker project
  */
-public abstract class Command implements Comparable<Command>{
+public abstract class Command implements Comparable<Command> {
 
     public static final String separator = ".";
     private final Command parent;
@@ -58,7 +58,7 @@ public abstract class Command implements Comparable<Command>{
     public abstract Variable onCalled(Variable[] params,Task task) throws SimpleTaskException;
 
     public void invokeChildren(String pre, String last) {
-
+        //todo
     }
     
     @Override

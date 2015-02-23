@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
  * Created on 12-8-2014.
  */
 public class DialogCommand extends Command {
+
     public DialogCommand() {
         super("dialog");
         new Command(this,"openSimple") {

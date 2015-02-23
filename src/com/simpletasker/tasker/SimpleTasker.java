@@ -131,7 +131,7 @@ public class SimpleTasker implements Runnable {
             trayTasker.setImage(noText);
             return;
         }
-        if(!tasks.isEmpty() && trayTasker!=null) {
+        if(trayTasker != null) {
             trayTasker.setImage(textGreen);
         }
         Calendar calendar = Calendar.getInstance();

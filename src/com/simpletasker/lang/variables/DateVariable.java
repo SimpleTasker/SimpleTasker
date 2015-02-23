@@ -1,6 +1,9 @@
 package com.simpletasker.lang.variables;
 
-import java.util.Calendar;
+import com.simpletasker.common.exceptions.SimpleTaskException;
+
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -17,7 +20,12 @@ public class DateVariable extends Variable {
         this.value = s;
     }
 
-    public Date getActualValue() {
-        return Calendar.getInstance().getTime();
+    public Date getActualValue() throws SimpleTaskException {
+        try {
+            return DateFormat.getTimeInstance().parse(value); //i hope ??
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new SimpleTaskException("Could not convert date properly:" + value);
+        }
     }
 }
